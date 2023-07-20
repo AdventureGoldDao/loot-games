@@ -114,7 +114,6 @@ const GoogleForms = styled.a`
   height: 28px;
   line-height: 28px;
   text-align: center;
-  margin-right: 10px;
   border-radius: 50px;
   background-color: rgba(165, 255, 190, 0.1);
   text-decoration: none;
@@ -182,7 +181,7 @@ const HeaderSpecial = () => {
 
           <div className="df aic">
             <GoogleForms target="_blank" href="https://forms.gle/eKeyD2VzRYKCMksM7">Submit Game</GoogleForms>
-            {
+            {/* {
               (active || state.isWrongNetwork) &&
               <Select
                 onChange={handleSwitchChain}
@@ -223,17 +222,18 @@ const HeaderSpecial = () => {
                 :
                 state.isWrongNetwork ? '' :
                 <AccountBox className="ml16" to="/collector">{abbrTxHash(account, 5, 4)}</AccountBox>
-            }
+            } */}
           </div>
         </Box>
 
         <BoxH5>
           <Link onClick={cancel} to="/games"><Logo src={logoFull} /></Link>
-          <div className="df aic">
+          <GoogleForms target="_blank" href="https://forms.gle/eKeyD2VzRYKCMksM7">Submit Game</GoogleForms>
+          {/* <div className="df aic">
             <div className="df">
               <More onClick={() => { setShowBox(oldStr => oldStr === 'about' ? '' : 'about') }} src={moreG} />
             </div>
-          </div>
+          </div> */}
         </BoxH5>
       </Main>
 

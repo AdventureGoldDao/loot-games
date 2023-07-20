@@ -9,20 +9,23 @@ import { BREAKPOINTS } from 'theme';
 import { chainTypeImgObj, chainFun, symbolImgObj } from '../../utils/networkConnect';
 import logo1 from 'assets/img/games/logo1.jpg'
 import logo2 from 'assets/img/games/logo2.png'
-import logo3 from 'assets/img/games/logo3.jpg'
+import logo3 from 'assets/img/games/logo3.png'
 import logo4 from 'assets/img/games/logo4.jpg'
 import logo5 from 'assets/img/games/logo5.jpg'
 import banner1 from 'assets/img/games/banner1.jpg'
 import banner2 from 'assets/img/games/banner2.jpg'
-import banner3 from 'assets/img/games/banner3.jpg'
+import banner3 from 'assets/img/games/banner3.png'
 import banner4 from 'assets/img/games/banner4.jpg'
 import banner5 from 'assets/img/games/banner5.jpg'
 import collection from 'assets/img/games/collection.jpg'
 import archlootCollection1 from 'assets/img/games/archloot_collection1.png'
 import archlootCollection2 from 'assets/img/games/archloot_collection2.png'
 import archlootCollection3 from 'assets/img/games/archloot_collection3.png'
+import archlootCollection4 from 'assets/img/games/archloot_collection4.jpeg'
 import screen1 from 'assets/img/games/screen1.jpg'
 import screen2 from 'assets/img/games/screen2.jpg'
+import archlootScreen1 from 'assets/img/games/archloot_screen1.jpeg'
+import archlootScreen2 from 'assets/img/games/archloot_screen2.png'
 import land1 from 'assets/img/games/land1.png'
 import land2 from 'assets/img/games/land2.png'
 import { ReactComponent as ShareIcon } from 'assets/img/games/share.svg'
@@ -241,6 +244,7 @@ export const gamesArr = [
     name: 'Land, Labor and Capitol (LLC)',
     description: `Tycoon style game where players can enjoy the gameplay with many different levels of involvement, from simply buying in-game stock in player-owned companies, to holding land in areas they think will appreciate in value, to actively managing a portfolio of firms and optimizing their operations based on their predictions of the macroeconomy.`,
     logo: logo2,
+    comingSoon: true,
     banner: banner2,
     tags: ['Free to play'],
     supportChains: ['polygon'],
@@ -255,41 +259,38 @@ export const gamesArr = [
   {
     id: 'archloot',
     name: 'Archloot',
-    description: `UGC-NFT game. The 1st interactive NFT gameplay that frees your imagination.`,
+    description: `ArchLoot is a UGC P2E game that attempts to change the whole gamefi dynamics with its exceptional gameplay and unique infrastructure behind NFT assets.
+    Basically a player assemble his/her own avatar with different parts (NFTs with a diversity of rarity, stats, looks and skills), then start the adventure.
+    Game modes include PvE farm, group dungeons, 1 on 1 PvP, 3 on 3, clan wars, etc.
+    The protocol behind the nft asset, EIP 4985 and BEP 129, which derives from loot, allows in game prop/parts level up, skill change, and interoperability of a single NFT.
+    `,
     logo: logo3,
+    comingSoon: true,
     banner: banner3,
-    tags: ['UGC'],
-    supportChains: ['bsc'],
+    tags: ['Free to Play'],
+    supportChains: ['bsc', 'mainnet', 'zksyncera'],
     playLink: 'https://archloot.com/',
     website: 'https://archloot.com/',
     twitter: 'https://twitter.com/archlootOS',
     discord: 'http://discord.gg/gPJwXJSFAc',
-    screenshots: [{ type: 'youtube', url: 'https://www.youtube.com/embed/Q7Wve4bRGHg' }, { type: 'img', url: 'https://archloot.com/static/images/prod/features/mask.png' }, { type: 'img', url: 'https://archloot.com/_nuxt/img/game.8c08ced.png' }, { type: 'img', url: 'https://archloot.com/_nuxt/img/game-video.786f910.png' }],
+    screenshots: [{ type: 'img', url: archlootScreen1 }, { type: 'img', url: archlootScreen2 }],
     leaderboardLink: '',
     collections: [
       {
-        name: 'Collector Pass',
-        image: archlootCollection1,
-        collectionLink: 'https://archloot.com/mint',
+        name: 'ArchLoot Body Part NFT',
+        image: archlootCollection4,
+        collectionLink: 'https://archloot.com/blind-box/open-box/',
         mintStartTime: 0,
         mintEndTime: 0,
         chainType: 'bsc'
       },
       {
-        name: 'Goblin Pass',
-        image: archlootCollection2,
-        collectionLink: 'https://archloot.com/mint',
+        name: 'ArchLoot Body Part NFT',
+        image: archlootCollection4,
+        collectionLink: 'https://archloot.com/blind-box/open-box/',
         mintStartTime: 0,
         mintEndTime: 0,
-        chainType: 'bsc'
-      },
-      {
-        name: 'Adventurer Pass',
-        image: archlootCollection3,
-        collectionLink: 'https://archloot.com/pass/',
-        mintStartTime: 0,
-        mintEndTime: 0,
-        chainType: 'bsc'
+        chainType: 'zksyncera'
       },
     ]
   },
@@ -355,14 +356,26 @@ export default function GameDetail() {
               </>
             }
           </LinkBox>
-          <Button onClick={goPlay} style={{ height: 40 }} className="w180 btn_multicolour">Play Now<ShareIcon width={9} height={9} style={{ marginLeft: 8 }} /></Button>
+          <Button disabled={gameInfo.comingSoon} onClick={goPlay} style={{ height: 40 }} className="w180 btn_multicolour">
+            {
+              gameInfo.comingSoon ?
+                <span>Coming Soon</span>
+                :
+                <span>Play Now<ShareIcon width={9} height={9} style={{ marginLeft: 8 }} /></span>
+            }
+          </Button>
         </div>
       </PageHeader>
 
       <ContentBox >
         <TabBox className="df_align_center">
           {
-            tabArr.map(item => <TabItem key={item} active={item === currentTab}><span onClick={() => { setCurrentTab(item) }}>{item}</span></TabItem>)
+            tabArr.map(item => {
+            if (item === 'Play' && gameInfo.comingSoon) {
+              return ''
+            }
+            return <TabItem key={item} active={item === currentTab}><span onClick={() => { setCurrentTab(item) }}>{item}</span></TabItem>
+          })
           }
         </TabBox>
         {

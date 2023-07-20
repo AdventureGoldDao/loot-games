@@ -45,11 +45,6 @@ const NavLink = styled(Link) <{ active: boolean }>`
   width: 55px;
   height: 55px;
   margin-bottom: 30px;
-  ${props => props.active ? `
-      border: 1px solid #A5FFBE;
-      box-shadow: 0px 1px 10px 0px rgba(165, 255, 190, 0.50);
-    ` : ''
-  }
   &:hover {
     top: -3px;
     border: 1px solid #A5FFBE;
@@ -69,6 +64,20 @@ const Main = styled.div`
     padding-top: 60px;
     padding-bottom: 70px;
   }
+`
+const ComingSoonDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #85A391;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
 `
 
 const Layout = ({ children, routeArr }) => {
@@ -107,6 +116,9 @@ const Layout = ({ children, routeArr }) => {
               {
                 gamesArr.map(item =>
                   <NavLink key={item.id} to={`/games/${item.id}`} active={currentId === item.id}>
+                    {/* {
+                      item.comingSoon && <ComingSoonDiv>Coming<br />soon</ComingSoonDiv>
+                    } */}
                     <Tooltip title={item.name} placement="right" arrow>
                       <img src={item.logo} />
                     </Tooltip>
