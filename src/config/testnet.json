@@ -1,0 +1,43 @@
+{
+  "isTest": true,
+  "chains": [
+    {
+      "tokenName": "Loot",
+      "l1": {
+        "chainId": 5,
+        "address": "0x1bf210fdab56836ae26e19f6519989f2d1c9a815",
+        "name": "Goerli Ethereum",
+        "symbol": "AGLD",
+        "logoURI":
+        "https://pbs.twimg.com/profile_images/1431587138202701826/lpgblc4h_400x400.jpg",
+        "rpcURL":
+        "https://eth-goerli.g.alchemy.com/v2/R-2IK-_U4uoJKpr3zO9VqUl3upMmZsPh",
+        "decimals": 18,
+        "browserURL": "https://goerli.etherscan.io/"
+      },
+      "l2": {
+        "chainId": 9088912,
+        "address": "0x42FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "name": "Loot Chain Testnet",
+        "symbol": "AGLD",
+        "logoURI":
+        "https://pbs.twimg.com/profile_images/1431587138202701826/lpgblc4h_400x400.jpg",
+        "rpcURL": "https://testnet.rpc.lootchain.com/http",
+        "baseURL": "testnet.rpc.lootchain.com",
+        "browserURL": "https://testnet.explorer.lootchain.com/"
+      },
+      "decimals": 18,
+      "isNative": false
+    }
+  ],
+
+  "bridgeConfig": {
+    "addressManager": "0xfDf9cbDF4d6049C9f42Be3C84AA61Ffe2BF915f6",
+    "l1CrossDomainMessenger": "0xF2aE2fb831a5c081cc64BCf4D3294025A71612e5",
+    "l1StandardBridge": "0x7834750f243570093B72cB04dE00557250cea385",
+    "l1ERC721Bridge": "0x0000000000000000000000000000000000000000",
+    "stateCommitmentChain": "0x2a2FF5B0cCD4A1Eaf1B6eEA40EB827B0A7cf165d",
+    "canonicalTransactionChain": "0xAC97f6CCe8344C1d4953d7583Cb81eb909d7d5D3",
+    "bondManager": "0x709cdeBA5441a1a1FD8506f7A2a59C4edE2E8A8c"
+  }
+}

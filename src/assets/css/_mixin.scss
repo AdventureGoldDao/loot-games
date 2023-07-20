@@ -1,0 +1,44 @@
+@charset "utf-8";
+@mixin SACSS($prop: false, $name: "", $list: (), $unit: false) {
+  @each $item in $list {
+    .#{$name}#{$item } {
+      #{$prop}: if($unit, $item * $unit, $item);
+    }
+  }
+}
+
+@mixin Margins($list, $unit) {
+  @include SACSS(margin, m, $list, $unit);
+  @include SACSS(margin-top, mt, $list, $unit);
+  @include SACSS(margin-bottom, mb, $list, $unit);
+  @include SACSS(margin-right, mr, $list, $unit);
+  @include SACSS(margin-left, ml, $list, $unit);
+}
+
+@mixin Paddings($list, $unit) {
+  @include SACSS(padding, p, $list, $unit);
+  @include SACSS(padding-top, pt, $list, $unit);
+  @include SACSS(padding-right, pr, $list, $unit);
+  @include SACSS(padding-bottom, pb, $list, $unit);
+  @include SACSS(padding-left, pl, $list, $unit);
+}
+
+@mixin Clearfix() {
+  &:after {
+    display: table;
+    content: "";
+    clear: both;
+  }
+}
+@mixin Ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin Ellipsis-multiple() {
+  display: -webkit-box;
+  overflow: hidden;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+}

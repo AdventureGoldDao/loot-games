@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-size: 16px;
+  color: #fff;
+  font-family: 'Inconsolata', 'Bai Jamjuree', sans-serif, Poppins;
+  background-color: #131313;
+  @media #{$smWidth} {
+    font-size: 14px;
+  }
+}
+a {
+  color: #fff;
+}
+h1 {
+  font-size: 60px;
+  line-height: 84px;
+  @media #{$smWidth} {
+    font-size: 60px;
+    line-height: 84px;
+  }
+}
+h2 {
+  font-size: 40px;
+  line-height: 48px;
+}
+h3 {
+  font-size: 26px;
+  line-height: 32px;
+}
+h4 {
+  font-size: 24px;
+  line-height: 32px;
+}
+h5 {
+  font-size: 18px;
+  line-height: 24px;
+}
+button {
+  cursor: pointer;
+}

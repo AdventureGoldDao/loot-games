@@ -1,0 +1,29 @@
+{
+  "name": "Your Collection Name",
+  "description": "Collection description",
+  "collection": [
+    {
+      "name": "#1",
+      "description": "NFT description",
+      "external_url": "",
+      "image": "1.png",
+      "attributes": [
+        {
+          "trait_type": "Background",
+          "value": ""
+        }
+        //more attribute
+      ],
+      "properties": {
+        "files": [
+          {
+            "uri": "1.png",
+            "type": "image/png"
+          }
+        ],
+        "creators": []
+      }
+    }
+    //more item
+  ]
+}
