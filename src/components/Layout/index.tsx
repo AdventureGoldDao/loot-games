@@ -6,7 +6,6 @@ import { Tooltip } from "@mui/material";
 
 import { BREAKPOINTS } from 'theme';
 import { mainContext } from "../../reducer";
-import Header from '../Header'
 import HeaderSpecial from '../HeaderSpecial'
 import { WalletConnect } from '../WalletConnect'
 import { gamesArr } from 'pages/GameDetail'
@@ -109,34 +108,27 @@ const Layout = ({ children, routeArr }) => {
 
   return (
     <>
-      {
-        currentRoute.special ?
-          <GamesMain>
-            <LeftNav>
-              {
-                gamesArr.map(item =>
-                  <NavLink key={item.id} to={`/games/${item.id}`} active={currentId === item.id}>
-                    {/* {
+      <GamesMain>
+        <LeftNav>
+          {
+            gamesArr.map(item =>
+              <NavLink key={item.id} to={`/games/${item.id}`} active={currentId === item.id}>
+                {/* {
                       item.comingSoon && <ComingSoonDiv>Coming<br />soon</ComingSoonDiv>
                     } */}
-                    <Tooltip title={item.name} placement="right" arrow>
-                      <img src={item.logo} />
-                    </Tooltip>
-                  </NavLink>
-                )
-              }
-              <Tooltip title={'Coming soon'} placement="right" arrow>
-                <img src={comingSoon} />
-              </Tooltip>
-            </LeftNav>
-            <HeaderSpecial />
-            <Main>{children}</Main>
-          </GamesMain> :
-          <>
-            <Header currentRoute={currentRoute} />
-            <Main>{children}</Main>
-          </>
-      }
+                <Tooltip title={item.name} placement="right" arrow>
+                  <img src={item.logo} />
+                </Tooltip>
+              </NavLink>
+            )
+          }
+          <Tooltip title={'Coming soon'} placement="right" arrow>
+            <img src={comingSoon} />
+          </Tooltip>
+        </LeftNav>
+        <HeaderSpecial />
+        <Main>{children}</Main>
+      </GamesMain>
       <WaitingWalletConfirmModal visible={state.showWaitingWalletConfirmModal.show} />
       <FailedTransactionModal visible={state.showFailedTransactionModal} />
       <TransactionModal visible={state.showTransactionModal} />

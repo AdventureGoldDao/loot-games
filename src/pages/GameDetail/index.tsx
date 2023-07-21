@@ -311,6 +311,7 @@ export default function GameDetail() {
   useEffect(() => {
     if (id) {
       setGameInfo(gamesArr.find(item => item.id === id))
+      setCurrentTab(tabArr[0])
     }
   }, [id])
 
