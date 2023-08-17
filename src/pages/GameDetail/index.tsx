@@ -296,9 +296,7 @@ export const gamesArr = [
   {
     id: 'craft',
     name: 'LootCraft',
-    description: `Introducing LootCraft: An Experimental On-Chain Voxel World.
-
-    LootCraft is a fully on-chain 3D voxel world, where every block of the virtual space exists as part of the blockchain. Every action and interaction within the world, whether it's mining resources, crafting items, or building structures, occurs as a series of transactions on the Lootchain.
+    description: `LootCraft is a fully on-chain 3D voxel world, where every block of the virtual space exists as part of the blockchain. Every action and interaction within the world, whether it's mining resources, crafting items, or building structures, occurs as a series of transactions on the Lootchain.
     
     LootCraft draws its inspiration from OPCraft, an iconic Autonomous World built on the OP Stack architecture. As a separate world, LootCraft preserves many of the key features found in OPCraft, but with a focus on optimizing for the LootChain, a blockchain designed to enhance the user experience. Explore the unique and innovative lootcraft autonomous world and build whatever you want.`,
     logo: logo4,
@@ -411,7 +409,7 @@ export default function GameDetail() {
                 })
               }
             </ScreenBox>
-            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8 }}>{gameInfo.description}</div>
+            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8, whiteSpace: 'pre-line'}}>{gameInfo.description}</div>
           </div>
         }
         {
