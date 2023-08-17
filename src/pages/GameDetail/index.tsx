@@ -10,13 +10,11 @@ import { chainTypeImgObj, chainFun, symbolImgObj } from '../../utils/networkConn
 import logo1 from 'assets/img/games/logo1.jpg'
 import logo2 from 'assets/img/games/logo2.png'
 import logo3 from 'assets/img/games/logo3.png'
-import logo4 from 'assets/img/games/logo4.jpg'
-import logo5 from 'assets/img/games/logo5.jpg'
+import logo4 from 'assets/img/games/logo4.png'
 import banner1 from 'assets/img/games/banner1.jpg'
 import banner2 from 'assets/img/games/banner2.jpg'
 import banner3 from 'assets/img/games/banner3.png'
-import banner4 from 'assets/img/games/banner4.jpg'
-import banner5 from 'assets/img/games/banner5.jpg'
+import banner4 from 'assets/img/games/banner4.png'
 import collection from 'assets/img/games/collection.jpg'
 import archlootCollection1 from 'assets/img/games/archloot_collection1.png'
 import archlootCollection2 from 'assets/img/games/archloot_collection2.png'
@@ -26,6 +24,8 @@ import screen1 from 'assets/img/games/screen1.jpg'
 import screen2 from 'assets/img/games/screen2.jpg'
 import archlootScreen1 from 'assets/img/games/archloot_screen1.jpeg'
 import archlootScreen2 from 'assets/img/games/archloot_screen2.png'
+import craftScreen1 from 'assets/img/games/craft_screen1.png'
+import craftScreen2 from 'assets/img/games/craft_screen2.png'
 import land1 from 'assets/img/games/land1.png'
 import land2 from 'assets/img/games/land2.png'
 import { ReactComponent as ShareIcon } from 'assets/img/games/share.svg'
@@ -292,6 +292,26 @@ export const gamesArr = [
         chainType: 'zksyncera'
       },
     ]
+  },
+  {
+    id: 'craft',
+    name: 'LootCraft',
+    description: `Introducing LootCraft: An Experimental On-Chain Voxel World.
+
+    LootCraft is a fully on-chain 3D voxel world, where every block of the virtual space exists as part of the blockchain. Every action and interaction within the world, whether it's mining resources, crafting items, or building structures, occurs as a series of transactions on the Lootchain.
+    
+    LootCraft draws its inspiration from OPCraft, an iconic Autonomous World built on the OP Stack architecture. As a separate world, LootCraft preserves many of the key features found in OPCraft, but with a focus on optimizing for the LootChain, a blockchain designed to enhance the user experience. Explore the unique and innovative lootcraft autonomous world and build whatever you want.`,
+    logo: logo4,
+    banner: banner4,
+    tags: ['Free to Play'],
+    supportChains: ['loot'],
+    playLink: 'https://lootcraft.buidl.day/',
+    website: 'https://lootcraft.buidl.day/',
+    twitter: 'https://twitter.com/Deplug_Studio?s=20',
+    discord: '',
+    screenshots: [{ type: 'img', url: craftScreen1 }, { type: 'img', url: craftScreen2 }],
+    leaderboardLink: '',
+    collections: []
   },
 ]
 
