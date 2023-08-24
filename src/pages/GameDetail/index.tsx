@@ -156,6 +156,7 @@ const ContentBox = styled.div`
 `
 const TabBox = styled.div`
   margin-bottom: 32px;
+  overflow: auto;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     margin-bottom: 20px;
   }
@@ -165,6 +166,7 @@ const TabItem = styled.div<{ active: boolean }>`
   margin-right: 27px;
   padding-right: 27px;
   border-right: 1px solid rgba(75, 89, 84, 0.4);
+  text-align: center;
   span {
     cursor: pointer;
     font-weight: 600;
@@ -296,6 +298,17 @@ export const gamesArr = [
   {
     id: 'craft',
     name: 'LootCraft',
+    advanced: `The game starts when a new block is created on the mainnet (or testnet) in addition to loading. If there are no transactions on the Lootchain when you try to play, you may need to create one yourself or wait a bit.
+
+    Currently, Loot Craft is in beta, but you can freely explore the in-game world, which is composed of voxel graphics. You'll need to spend a very, very small amount of gas to mine or build blocks and combine new items. In an upcoming update, we will allow gamers to receive minimal gas fees directly in-game.
+    
+    If you have a good understanding of disposable wallets, you can test mining and building now by doing the following.
+    1. Open the dev-tools : MacBook users → Command/Options/i, Windows users → F12
+    2. Find "console" on the right side of menu and "Network config" section.
+    3. Extract the "priavate key" of your disposable wallet from "Network config".
+    4. Import that wallet by putting "private key" in the metamask.
+    5. Now send a very small amount of AGLD to that wallet address via the Lootchain network. 0.01 AGLD should be enough.
+    6. Now you can start mining blocks, building, and crafting items like wooden chest!`,
     description: `LootCraft is a fully on-chain 3D voxel world, where every block of the virtual space exists as part of the blockchain. Every action and interaction within the world, whether it's mining resources, crafting items, or building structures, occurs as a series of transactions on the Lootchain.
     
     LootCraft draws its inspiration from OPCraft, an iconic Autonomous World built on the OP Stack architecture. As a separate world, LootCraft preserves many of the key features found in OPCraft, but with a focus on optimizing for the LootChain, a blockchain designed to enhance the user experience. Explore the unique and innovative lootcraft autonomous world and build whatever you want.`,
@@ -313,7 +326,7 @@ export const gamesArr = [
   },
 ]
 
-const tabArr = ['Overview', 'Collections', 'Leaderboard', 'Play']
+const tabArr = ['Overview', 'Advanced Description', 'Collections', 'Leaderboard', 'Play']
 
 export default function GameDetail() {
   // @ts-ignore
@@ -392,10 +405,19 @@ export default function GameDetail() {
             if (item === 'Play' && gameInfo.comingSoon) {
               return ''
             }
+            if (item === 'Advanced Description' && !gameInfo.advanced) {
+              return ''
+            }
             return <TabItem key={item} active={item === currentTab}><span onClick={() => { setCurrentTab(item) }}>{item}</span></TabItem>
           })
           }
         </TabBox>
+
+
+
+
+
+
         {
           currentTab === tabArr[0] && <div key={id} data-aos="fade-up" data-aos-duration={500}>
             <ScreenBox >
@@ -413,7 +435,12 @@ export default function GameDetail() {
           </div>
         }
         {
-          currentTab === tabArr[1] && <CollectionBox>
+          currentTab === tabArr[1] && <div key={id} data-aos="fade-up" data-aos-duration={500}>
+            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8, whiteSpace: 'pre-line'}}>{gameInfo.advanced}</div>
+          </div>
+        }
+        {
+          currentTab === tabArr[2] && <CollectionBox>
             {
               gameInfo.collections?.map(item => (
                 <BadgeCard key={item.name} item={item} type='game' />
@@ -425,7 +452,7 @@ export default function GameDetail() {
           </CollectionBox>
         }
         {
-          currentTab === tabArr[2] && <>
+          currentTab === tabArr[3] && <>
             {
               gameInfo.leaderboardLink ?
                 <iframe width="100%" height="1000px" src={gameInfo.leaderboardLink} frameBorder="0"></iframe>
@@ -437,7 +464,7 @@ export default function GameDetail() {
           </>
         }
         {
-          currentTab === tabArr[3] &&
+          currentTab === tabArr[4] &&
           <iframe width="100%" height="1000px" src={gameInfo.website} frameBorder="0"></iframe>
         }
       </ContentBox>
