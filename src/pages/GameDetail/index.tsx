@@ -298,20 +298,11 @@ export const gamesArr = [
   {
     id: 'craft',
     name: 'LootCraft',
-    advanced: `The game starts when a new block is created on the mainnet (or testnet) in addition to loading. If there are no transactions on the Lootchain when you try to play, you may need to create one yourself or wait a bit.
+    description: `LootCraft is a fully on-chain 3D voxel autonomous world, where every block of the virtual space exists as part of the blockchain. Every action and interaction within the world, whether it's mining resources, crafting items, or building structures, occurs as a series of transactions on the Lootchain.
 
-    Currently, Loot Craft is in beta, but you can freely explore the in-game world, which is composed of voxel graphics. You'll need to spend a very, very small amount of gas to mine or build blocks and combine new items. In an upcoming update, we will allow gamers to receive minimal gas fees directly in-game.
+    LootCraft draws its inspiration from OPCraft, an iconic Autonomous World built on the OP Stack architecture. As a separate world, LootCraft preserves many of the key features found in OPCraft, but with a focus on optimizing for the LootChain, a blockchain designed to enrich Autonomous world. 
     
-    If you have a good understanding of disposable wallets, you can test mining and building now by doing the following.
-    1. Open the dev-tools : MacBook users → Command/Options/i, Windows users → F12
-    2. Find "console" on the right side of menu and "Network config" section.
-    3. Extract the "priavate key" of your disposable wallet from "Network config".
-    4. Import that wallet by putting "private key" in the metamask.
-    5. Now send a very small amount of AGLD to that wallet address via the Lootchain network. 0.01 AGLD should be enough.
-    6. Now you can start mining blocks, building, and crafting items like wooden chest!`,
-    description: `LootCraft is a fully on-chain 3D voxel world, where every block of the virtual space exists as part of the blockchain. Every action and interaction within the world, whether it's mining resources, crafting items, or building structures, occurs as a series of transactions on the Lootchain.
-    
-    LootCraft draws its inspiration from OPCraft, an iconic Autonomous World built on the OP Stack architecture. As a separate world, LootCraft preserves many of the key features found in OPCraft, but with a focus on optimizing for the LootChain, a blockchain designed to enhance the user experience. Explore the unique and innovative lootcraft autonomous world and build whatever you want.`,
+    Accessing Lootcraft is very simple - just open it up within any browser. Mining blocks, placing them in new locations, and creating items in the Lootcraft all generate transactions, so you need gas fee. Press ESC to make your mouse pointer visible, and click the Request Faucet button on the right to get your gas fee. Now you can mine, create, and leave your mark on Lootcraft with whatever you want. Every trace of your interaction with the world will remain permanently on the Lootchain.`,
     logo: logo4,
     banner: banner4,
     tags: ['Free to Play'],
