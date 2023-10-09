@@ -11,10 +11,12 @@ import logo1 from 'assets/img/games/logo1.jpg'
 import logo2 from 'assets/img/games/logo2.png'
 import logo3 from 'assets/img/games/logo3.png'
 import logo4 from 'assets/img/games/logo4.png'
+import logo5 from 'assets/img/games/logo5.png'
 import banner1 from 'assets/img/games/banner1.jpg'
 import banner2 from 'assets/img/games/banner2.jpg'
 import banner3 from 'assets/img/games/banner3.png'
 import banner4 from 'assets/img/games/banner4.png'
+import banner5 from 'assets/img/games/banner5.jpg'
 import collection from 'assets/img/games/collection.jpg'
 import archlootCollection1 from 'assets/img/games/archloot_collection1.png'
 import archlootCollection2 from 'assets/img/games/archloot_collection2.png'
@@ -28,6 +30,8 @@ import craftScreen1 from 'assets/img/games/craft_screen1.png'
 import craftScreen2 from 'assets/img/games/craft_screen2.png'
 import land1 from 'assets/img/games/land1.png'
 import land2 from 'assets/img/games/land2.png'
+import xland1 from 'assets/img/games/xland_screen1.jpg'
+import xland2 from 'assets/img/games/xland_screen2.jpg'
 import { ReactComponent as ShareIcon } from 'assets/img/games/share.svg'
 import { ReactComponent as WebsiteIcon } from 'assets/img/games/website.svg'
 import { ReactComponent as TwitterIcon } from 'assets/img/games/twitter.svg'
@@ -315,6 +319,29 @@ export const gamesArr = [
     leaderboardLink: '',
     collections: []
   },
+  {
+    id: 'xLand',
+    name: 'X Land',
+    comingSoon: true,
+    description: `X Land is a virtual world brimming with creativity and adventure. In this app, you'll embark on a marvelous journey through a variety of games and challenges.
+
+    In this app, you'll not only immerse yourself in thrilling narratives but also build deep social connections by sharing your experiences with fellow adventurers.
+    
+    X Land is a world of boundless possibilities, waiting for you to explore and uncover.
+    
+    So, adventurer, are you ready to step into X Land and embark on an incredible journey? Here, you'll become your own hero and write your own legend. Join us now and explore this mysterious and wonderfully surprising world!`,
+    logo: logo5,
+    banner: banner5,
+    tags: ['Free to Play'],
+    supportChains: ['loot'],
+    playLink: '',
+    website: '',
+    twitter: '',
+    discord: '',
+    screenshots: [{ type: 'img', url: xland1 }, { type: 'img', url: xland2 }],
+    leaderboardLink: '',
+    collections: []
+  },
 ]
 
 const tabArr = ['Overview', 'Advanced Description', 'Collections', 'Leaderboard', 'Play']
@@ -364,7 +391,10 @@ export default function GameDetail() {
         </div>
         <div className="df_align_center_h5">
           <LinkBox>
-            <LinkA href={gameInfo.website} target='_blank'><WebsiteIcon /></LinkA>
+            {
+              gameInfo.website &&
+              <LinkA href={gameInfo.website} target='_blank'><WebsiteIcon /></LinkA>
+            }
             {
               gameInfo.twitter && <>
                 <BoxHr />
@@ -393,14 +423,14 @@ export default function GameDetail() {
         <TabBox className="df_align_center">
           {
             tabArr.map(item => {
-            if (item === 'Play' && gameInfo.comingSoon) {
-              return ''
-            }
-            if (item === 'Advanced Description' && !gameInfo.advanced) {
-              return ''
-            }
-            return <TabItem key={item} active={item === currentTab}><span onClick={() => { setCurrentTab(item) }}>{item}</span></TabItem>
-          })
+              if (item === 'Play' && gameInfo.comingSoon) {
+                return ''
+              }
+              if (item === 'Advanced Description' && !gameInfo.advanced) {
+                return ''
+              }
+              return <TabItem key={item} active={item === currentTab}><span onClick={() => { setCurrentTab(item) }}>{item}</span></TabItem>
+            })
           }
         </TabBox>
 
@@ -422,12 +452,12 @@ export default function GameDetail() {
                 })
               }
             </ScreenBox>
-            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8, whiteSpace: 'pre-line'}}>{gameInfo.description}</div>
+            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8, whiteSpace: 'pre-line' }}>{gameInfo.description}</div>
           </div>
         }
         {
           currentTab === tabArr[1] && <div key={id} data-aos="fade-up" data-aos-duration={500}>
-            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8, whiteSpace: 'pre-line'}}>{gameInfo.advanced}</div>
+            <div style={{ color: '#ebebeb', fontWeight: 400, lineHeight: 1.8, whiteSpace: 'pre-line' }}>{gameInfo.advanced}</div>
           </div>
         }
         {
