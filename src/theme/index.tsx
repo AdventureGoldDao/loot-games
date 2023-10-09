@@ -44,7 +44,7 @@ export const customTheme = createTheme({
           textTransform: 'none',
           '&.Mui-disabled': {
             backgroundColor: '#333A33 !important',
-            color: '#556659 !important'
+            color: '#A5FFBE !important'
           }
         },
       },
