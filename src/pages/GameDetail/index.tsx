@@ -358,7 +358,7 @@ export const gamesArr = [
     logo: logo6,
     banner: banner6,
     tags: ['AIGC','AutonomousWorld'],
-    supportChains: ['loot'],
+    supportChains: ['loot','sepolia'],
     playLink: 'https://beta.gabby.world',
     website: 'https://gabby.world',
     twitter: 'https://twitter.com/gabby_world_',
