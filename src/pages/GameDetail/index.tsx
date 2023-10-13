@@ -347,7 +347,7 @@ export const gamesArr = [
     collections: []
   },
   {
-    id: 'Gabby World',
+    id: 'GabbyWorld',
     name: 'Gabby World',
     // comingSoon: true,
     description: `Gabby World is the first genAI-native autonomous world, where users can raise AI characters and create adventures through turning ideas into on-chain prompts, and permissionlessly bring any 3rd-party NFTs into the world to generate and capture value.
