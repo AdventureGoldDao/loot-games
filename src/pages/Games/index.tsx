@@ -264,7 +264,7 @@ export default function Games() {
         </GameInfoBox>
         <GamesRightBox>
           {
-            gamesArr.slice(0, 4).map(item =>
+            gamesArr.slice(2, 6).map(item =>
               <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
                 <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
               </GamesRightBoxItem>
