@@ -378,7 +378,7 @@ export default function GameDetail() {
   const [currentTab, setCurrentTab] = useState(tabArr[0]);
 
   const goPlay = () => {
-    window.open(gameInfo.website)
+    window.open(gameInfo.playLink)
   }
 
   useEffect(() => {
