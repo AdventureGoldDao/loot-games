@@ -10,6 +10,9 @@ import base from "../assets/img/chain/corner_base.svg";
 import op from "../assets/img/chain/corner_op.svg";
 import arb from "../assets/img/chain/corner_arb.svg";
 import zk from "../assets/img/chain/corner_zk.svg";
+import oasis from "../assets/img/chain/oasisNetwork.png";
+import lattice from "../assets/img/chain/lattice.png";
+import allEvm from "../assets/img/chain/allEvm.svg";
 import polygonCom from "assets/img/chain/com_polygon.svg";
 import klaytnCom from "assets/img/chain/com_klaytn.svg";
 import ethCom from "assets/img/chain/com_eth.svg";
@@ -33,7 +36,6 @@ export const symbolImgObj = {
   'KLAY': klaytn,
   'TRX': tron,
 }
-
 export const chainTypeImgObj = {
   mainnet: eth,
   basegoerli: base,
@@ -56,7 +58,10 @@ export const chainTypeImgObj = {
   loot: loot,
   loottest: loot,
   tron: tron,
-  shasta: tron
+  shasta: tron,
+  oasis:oasis,
+  lattice:lattice,
+  allEvm: allEvm
 }
 
 export const chainTypeComImgObj = {
@@ -147,6 +152,7 @@ export const SUPPORTED_CHAINS = {
 export const chainTxtObj = {
   mainnet: "Ethereum",
   goerli: "Ethereum Goerli",
+  sepolia: "Ethereum Sepolia",
   loot: "Loot",
   loottest: "Loot Test",
   basegoerli: "Base Goerli",
@@ -165,7 +171,10 @@ export const chainTxtObj = {
   klaytn: "Klaytn",
   baobab: "baobab",
   tron: "Tron",
-  shasta: "shasta"
+  shasta: "shasta",
+  oasis: "Oasis Network",
+  lattice: "Lattice Testnet",
+  allEvm: "All EVM Chains"
 }
 
 export const handleHistoryAddress = (chainType, address) => {

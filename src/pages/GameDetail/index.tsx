@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { Select, MenuItem, Button } from "@mui/material";
+import { Select, MenuItem, Button, Tooltip } from "@mui/material";
 import styled from 'styled-components/macro';
 import { Link, NavLink, useLocation, useHistory, useParams } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import { BREAKPOINTS } from 'theme';
-import { chainTypeImgObj, chainFun, symbolImgObj } from '../../utils/networkConnect';
+import { chainTypeImgObj,chainTxtObj, chainFun, symbolImgObj } from '../../utils/networkConnect';
 import logo1 from 'assets/img/games/logo1.jpg'
 import logo2 from 'assets/img/games/logo2.png'
 import logo3 from 'assets/img/games/logo3.png'
 import logo4 from 'assets/img/games/logo4.png'
 import logo5 from 'assets/img/games/logo5.png'
 import logo6 from 'assets/img/games/logo6.png'
+import logo7 from 'assets/img/games/logo7.png'
+import logo8 from 'assets/img/games/logo8.png'
 import banner1 from 'assets/img/games/banner1.jpg'
 import banner2 from 'assets/img/games/banner2.jpg'
 import banner3 from 'assets/img/games/banner3.png'
 import banner4 from 'assets/img/games/banner4.png'
 import banner5 from 'assets/img/games/banner5.jpg'
 import banner6 from 'assets/img/games/banner6.jpg'
+import banner7 from 'assets/img/games/banner7.png'
+import banner8 from 'assets/img/games/banner8.jpg'
 import collection from 'assets/img/games/collection.jpg'
 import archlootCollection1 from 'assets/img/games/archloot_collection1.png'
 import archlootCollection2 from 'assets/img/games/archloot_collection2.png'
@@ -36,6 +40,9 @@ import xland1 from 'assets/img/games/xland_screen1.jpg'
 import xland2 from 'assets/img/games/xland_screen2.jpg'
 import gabby1 from 'assets/img/games/gabby1.png'
 import gabby2 from 'assets/img/games/gabby2.png'
+import chaquer1 from 'assets/img/games/chaquer1.png'
+import chaquer2 from 'assets/img/games/chaquer2.png'
+import league from 'assets/img/games/league.jpg'
 import { ReactComponent as ShareIcon } from 'assets/img/games/share.svg'
 import { ReactComponent as WebsiteIcon } from 'assets/img/games/website.svg'
 import { ReactComponent as TwitterIcon } from 'assets/img/games/twitter.svg'
@@ -367,6 +374,48 @@ export const gamesArr = [
     leaderboardLink: 'https://beta.gabby.world/leaderboard',
     collections: []
   },
+  {
+    id: 'Chaquer',
+    name: 'Chaquer',
+    comingSoon: true,
+    description: `Chaquer is a fully on-chain real time strategy game. Chaquer's design is inspired by the Age of Empires series. Users can deploy castles, and create their armies to fight with each other. There is a 50x50 tilemap which has three distinct tile types: land, sea, and mountain. You can act only on sea and land tiles.
+
+    Key highlights:
+    Action-Packed Matches: Get Set for Serious Fun - Game On!
+    Risky Play: Stake, Race, Win - It's All or Nothing!
+    Game-Changing NFTs: Level Up Your Strategy: Supercharge Your Strategy with Booster NFTs!`,
+    logo: logo7,
+    banner: banner7,
+    tags: ['chaquer','fuoc','onchain'],
+    supportChains: ['loot','lattice','allEvm'],
+    playLink: 'http://go.chaquer.xyz',
+    website: 'http://chaquer.xyz',
+    twitter: 'https://twitter.com/chaquer_rtsgame',
+    discord: '',
+    screenshots: [{ type: 'img', url: chaquer1 }, { type: 'img', url: chaquer2 }],
+    leaderboardLink: '',
+    collections: []
+  },
+  {
+    id: 'League of Thrones',
+    name: 'League of Thrones',
+    // comingSoon: true,
+    description: `League of Thrones is a Modular On-Chain Strategy Game Played in DAOs.
+    League of Thrones creates a season based battlefield for SLG lovers to compete for rewards in the form of legions. All gaming logic/media/data are stored on blockchain, which enables actions to be easily verifiable, while keeping the gaming ecosystem decentralized. LOT allows blue-chip NFT holders to join the game with their own NFTs fashioned by LOT-style stable diffusion AI. 
+    `,
+    logo: logo8,
+    banner: banner8,
+    tags: ['SLG','FOCG'],
+    supportChains: ['bsc','oasis'],
+    playLink: 'https://app.leagueofthrones.com/',
+    website: 'https://www.leagueofthrones.com',
+    twitter: 'https://twitter.com/LOT_HQ',
+    discord: '',
+    screenshots: [{ type: 'img', url: league }],
+    leaderboardLink: 'https://www.leagueofthrones.com/event',
+    collections: []
+  },
+
 ]
 
 const tabArr = ['Overview', 'Advanced Description', 'Collections', 'Leaderboard', 'Play']
@@ -401,7 +450,10 @@ export default function GameDetail() {
                 <span>Support Chain</span>
                 {
                   gameInfo.supportChains?.map(item => (
-                    <ChainImg src={chainTypeImgObj[item]} />
+                    <Tooltip title={chainTxtObj[item]} placement="right" arrow>
+                      <ChainImg src={chainTypeImgObj[item]} />
+                  {/* <img src={item.logo} /> */}
+                  </Tooltip>
                   ))
                 }
               </ChainBox>
