@@ -11,6 +11,7 @@ import { ContextProvider } from "./reducer";
 import Layout from "./components/Layout";
 import Games from "pages/Games";
 import GameDetail from "pages/GameDetail";
+import NFTs from "pages/NFTs";
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -24,6 +25,9 @@ const routeArr = [
   },
   {
     component: GameDetail, path: '/games/:id', special: 'game'
+  },
+  {
+    component: NFTs, path: '/nfts', special: 'nfts'
   },
 ]
 

@@ -109,13 +109,10 @@ const Layout = ({ children, routeArr }) => {
   return (
     <>
       <GamesMain>
-        <LeftNav>
+        {/* <LeftNav>
           {
             gamesArr.map(item =>
               <NavLink key={item.id} to={`/games/${item.id}`} active={currentId === item.id}>
-                {/* {
-                      item.comingSoon && <ComingSoonDiv>Coming<br />soon</ComingSoonDiv>
-                    } */}
                 <Tooltip title={item.name} placement="right" arrow>
                   <img src={item.logo} />
                 </Tooltip>
@@ -125,8 +122,8 @@ const Layout = ({ children, routeArr }) => {
           <Tooltip title={'Coming soon'} placement="right" arrow>
             <img src={comingSoon} />
           </Tooltip>
-        </LeftNav>
-        <HeaderSpecial />
+        </LeftNav> */}
+        <HeaderSpecial currentRoute={currentRoute} />
         <Main>{children}</Main>
       </GamesMain>
       <WaitingWalletConfirmModal visible={state.showWaitingWalletConfirmModal.show} />
