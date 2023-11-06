@@ -131,6 +131,11 @@
   justify-content: center;
   align-items: center;
 }
+.df_column_between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .space-between {
   display: flex;
@@ -744,7 +749,14 @@ button {
 .MuiPickersPopper-paper{
   background-color: #FFF !important;
 }
-
+.MuiTable-root {
+  .MuiTableRow-root {
+    display: flex;
+  }
+  .MuiTableCell-body {
+    padding: 0;
+  }
+}
 @media #{$smWidth} {
   .MuiModal-root {
     .MuiBox-root {

@@ -20,7 +20,7 @@ import { WrongNetwork } from '../Header'
 const Main = styled.div`
   position: fixed;
   top: 0;
-  left: 100px;
+  left: 0px;
   right: 0;
   height: 72px;
   z-index: 10;
@@ -120,7 +120,7 @@ const GoogleForms = styled.a`
   font-size: 14px;
 `
 
-const HeaderSpecial = () => {
+const HeaderSpecial = ({currentRoute}) => {
   const [showBox, setShowBox] = useState('');
   const [chainName, setChainName] = useState('mainnet')
   const [bgOpacity, setBgOpacity] = useState(0.5)
@@ -178,7 +178,10 @@ const HeaderSpecial = () => {
           <div className="df aic">
             <Link to="/games"><Logo src={logoFull} /></Link>
           </div>
-
+          <div className="f1">
+            <NavLink to="/" active={currentRoute.parent === 'games'} className={`ml60`}>Games</NavLink>
+            <NavLink to="/nfts" active={currentRoute.parent === 'nfts'} className={`ml60`}>NFTs</NavLink>
+          </div>
           <div className="df aic">
             <GoogleForms target="_blank" href="https://forms.gle/eKeyD2VzRYKCMksM7">Submit Game</GoogleForms>
             {/* {

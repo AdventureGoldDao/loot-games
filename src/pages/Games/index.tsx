@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@mui/material";
 import styled from 'styled-components/macro';
 import { useHistory } from 'react-router-dom'
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
+import { chainTypeImgObj, chainTxtObj, chainFun, symbolImgObj } from '../../utils/networkConnect';
 import { BREAKPOINTS } from 'theme';
 import { gamesArr } from 'pages/GameDetail'
 import upcoming from 'assets/img/home/icon_upcoming.png'
+import { queryGameList } from 'services/games'
 
 const EnlargementBgBox = styled.div`
   position: absolute;
@@ -21,7 +30,7 @@ const EnlargementBgBox = styled.div`
 const Main = styled.div`
   position: relative;
   min-height: 100vh;
-  padding: 102px 100px 70px 145px;
+  padding: 102px 100px 70px 100px;
 
   @media screen and (min-width: ${BREAKPOINTS.xxl}px) {
     padding-right: 150px;
@@ -131,14 +140,14 @@ const ComingSoonBox = styled.div`
     margin-bottom: 0;
   }
 `
-export const Tag = styled.div`
+export const Tag = styled.div<{ status: string }>`
   height: 30px;
   line-height: 28px;
   padding: 0 20px;
   border-radius: 50px;
   border: 1px solid #4B5954;
   background: #000;
-  color: #A5FFBE;
+  color: ${props => props.status === 'yellow' ? `#FFF161` : props.status === 'blue' ? `#92D1FF` : `#A5FFBE`};
   font-size: 16px;
   font-weight: 500;
   margin-right: 12px;
@@ -181,7 +190,7 @@ const ContentItem = styled.div`
     transform: scale(1.2, 1.2);
   }
 `
-const ContentItemComingSoon =  styled.div`
+const ContentItemComingSoon = styled.div`
   position: relative;
   top: 0;
   transition: top 0.2s;
@@ -228,43 +237,163 @@ const DetailLine = styled.div`
   font-weight: 400;
   width: 100%;
 `
-
-
+const GamesHeader = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid #4B5954;
+  background: #111211;
+`
+const GamesHeaderItem = styled.div`
+  font-family: Inconsolata;
+  font-size: 16px;
+  color: #85A391;
+  line-height: 24px;
+  min-width: 120px;
+`
+const GamesContent = styled.div`
+  
+`
+const GamesContentItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #4B5954;
+  background: #111211;
+  cursor: pointer;
+`
+const GamesItemImg = styled.img`
+  width: 126px;
+  height: 76px;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: center;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    width: 100px;
+    height: 66px;
+  }
+`
+const GamesItemNameBox = styled.div`
+ padding-left: 20px;
+`
+const GamesItemName = styled.div`
+  margin-bottom: 10px;
+  color: #A5FFBE;
+  font-family: Inconsolata;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+`
+const GamesItemNameBoxChain = styled.div`
+  display: flex;
+`
+const ChainImg = styled.img`
+  width: 32px;
+  border-radius: 32px;
+  margin-right: 17px;
+`
+const GamesItemStatus = styled.div<{ status: string }>`
+  /* height: 30px; */
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 1px solid #4B5954;
+  background: #0E100F;
+  font-size: 14px;
+  color: ${props => props.status === 'yellow' ? `#FFF161` : props.status === 'blue' ? `#92D1FF` : `#A5FFBE`};
+`
+const StyledTableHead = styled(TableHead)`
+  display: flex !important;
+  width: 100%;
+  margin-bottom: 10px;
+`
+const StyledTableRow = styled(TableRow)`
+  display: flex !important;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid #85A391;
+  border-radius: 10px;
+  background-color: #111211;
+`
+const StyledBodyTableRow = styled(TableRow)`
+  display: flex !important;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #85A391;
+  border-radius: 10px;
+  background-color: #111211;
+  cursor: pointer;
+`
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#111211',
+    color: '#85A391',
+    padding: '0 10px',
+    borderBottom: 'none',
+    lineHeight: '24px',
+  },
+  [`&.${tableCellClasses.body}`]: {
+    padding: '0',
+    borderBottom: 'none',
+    fontSize: 14,
+  },
+}));
 
 export default function Games() {
-  const [selectGame, setSelectGame] = useState(gamesArr[0]);
+  const [selectGame, setSelectGame] = useState<any>();
+  const [gameList, setGameList] = useState([]);
+  const [recommendList, setRecommendList] = useState(gamesArr[0]);
   const history = useHistory()
 
   const goGameWebsite = () => {
-    history.push(`/games/${selectGame.id}`)
+    history.push(`/games/${selectGame.gameId}`)
   }
   const goGameDetail = (item) => {
-    history.push(`/games/${item.id}`)
+    history.push(`/games/${item.gameId}`)
+  }
+  const queryList = async () => {
+    let data: any = await queryGameList('', false, 1, 999)
+    setGameList(data.list)
+    setSelectGame(data.list[0])
+  }
+  const queryRecommond = async () => {
+    let data: any = await queryGameList('', true, 1, 5)
+    setRecommendList(data.list)
+    console.log(data.list);
+    // setSelectGame(data.list[0])
   }
 
   useEffect(() => {
+    queryRecommond()
+    queryList()
   }, [])
 
   return (
     <Main>
-      <BgBox style={{ backgroundImage: `url(${selectGame.banner})` }} />
+      <BgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
       <GamesBox>
         <GameInfoBox>
-          <EnlargementBgBox style={{ backgroundImage: `url(${selectGame.banner})` }} />
+          <EnlargementBgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
           <ShadeBox>
-            <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{selectGame.name}</div>
+            <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{selectGame?.name}</div>
             <div className='df_align_center mb20'>
               {
-                selectGame.tags.map(item => <Tag>{item}</Tag>)
+                selectGame?.tags.map(item => <Tag status=''>{item}</Tag>)
               }
             </div>
-            <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{selectGame.description}</div>
+            <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{selectGame?.description}</div>
             <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
           </ShadeBox>
         </GameInfoBox>
         <GamesRightBox>
           {
-            gamesArr.slice(2, 6).map(item =>
+            gameList.slice(2, 6).map(item =>
               <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
                 <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
               </GamesRightBoxItem>
@@ -277,11 +406,118 @@ export default function Games() {
       </GamesBox>
       <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
         <img width={44} src={upcoming} />
-        <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>Games</div>
+        <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
       </div>
+      <Paper sx={{ width: '100%', overflow: 'hidden', background: 'transparent' }}>
+        <TableContainer >
+          <Table stickyHeader aria-label="sticky table">
+            <StyledTableHead>
+              <StyledTableRow>
+                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  {''}
+                </StyledTableCell>
+                <StyledTableCell  className='f2' align={'left'} style={{ minWidth: '170px' }} >
+                  {'Name'}
+                </StyledTableCell>
+                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  {'Twitter'}
+                </StyledTableCell>
+                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  {'Discord'}
+                </StyledTableCell>
+                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  {'NFT Volume'}
+                </StyledTableCell>
+                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  {'Wallet address'}
+                </StyledTableCell>
+                <StyledTableCell  className='f2' align={'center'} style={{ minWidth: '170px' }} >
+                  {'Status'}
+                </StyledTableCell>
+              </StyledTableRow>
+            </StyledTableHead>
+            <TableBody>
+              {gameList
+                .map((row) => {
+                  return (
+                    <StyledBodyTableRow onClick={() => { goGameDetail(row) }} hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <StyledTableCell className='f1' align={'left'}>
+                        <GamesItemImg  src={row.banner}></GamesItemImg>
+                      </StyledTableCell>
+                      <StyledTableCell className='f2' align={'left'}>
+                        <GamesItemNameBox>
+                          <GamesItemName>{row.name}</GamesItemName>
+                          <GamesItemNameBoxChain>
+                            {
+                              row.supportChains?.map(chain => (
+                                <ChainImg src={chainTypeImgObj[chain]} />
+                              ))
+                            }
+                          </GamesItemNameBoxChain>
+                        </GamesItemNameBox>
+                      </StyledTableCell>
+                      <StyledTableCell className='f1' key={row.id} align={'left'}>
+                        <div className='f1 tac c_f'>{row.twitterFollowerCount ? row.twitterFollowerCount : '--'}</div>
+                      </StyledTableCell>
+                      <StyledTableCell className='f1' key={row.id} align={'left'}>
+                        <div className='f1 tac c_f'>{row.discordFollowerCount ? row.discordFollowerCount : '--'}</div>
+                      </StyledTableCell>
+                      <StyledTableCell className='f1' key={row.id} align={'left'}>
+                        <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>
+                      </StyledTableCell>
+                      <StyledTableCell className='f1' key={row.id} align={'left'}>
+                        <div className='f1 tac c_f'>{row.walletAddressCount ? row.walletAddressCount : '--'}</div>
+                      </StyledTableCell>
+                      <StyledTableCell className='f2' key={row.id} align={'center'}>
+                        <GamesItemStatus status={row.status === 'Beta' ? 'yellow' : row.status === 'In Development' ? 'blue' : ''}>{row.status}</GamesItemStatus>
 
-      <Content>
+                      </StyledTableCell>
+                      {/* );
+                      })} */}
+                    </StyledBodyTableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      {/* <GamesHeader>
+        <GamesHeaderItem className='f1'></GamesHeaderItem>
+        <GamesHeaderItem className='f2 pl20'>Name</GamesHeaderItem>
+        <GamesHeaderItem className='f1 tac'>Twitter</GamesHeaderItem>
+        <GamesHeaderItem className='f1 tac'>Discord</GamesHeaderItem>
+        <GamesHeaderItem className='f1 tac'>NFT voume</GamesHeaderItem>
+        <GamesHeaderItem className='f1 tac'>Wallet address</GamesHeaderItem>
+        <GamesHeaderItem className='f2 tac'>Status</GamesHeaderItem>
+      </GamesHeader>
+      <GamesContent>
         {
+          gameList.map(item =>
+            <GamesContentItem onClick={() => { goGameDetail(item) }}>
+              <GamesItemImg className='f1' src={item.banner}></GamesItemImg>
+              <GamesItemNameBox className='f2'>
+                <GamesItemName>{item.name}</GamesItemName>
+                <GamesItemNameBoxChain>
+                  {
+                    item.supportChains?.map(chain => (
+                      <ChainImg src={chainTypeImgObj[chain]} />
+                    ))
+                  }
+                </GamesItemNameBoxChain>
+              </GamesItemNameBox>
+              <div className='f1 tac'>{item.twitterFollowerCount ? item.twitterFollowerCount : '--'}</div>
+              <div className='f1 tac'>{item.discordFollowerCount ? item.discordFollowerCount : '--'}</div>
+              <div className='f1 tac'>{item.nftVolume ? item.nftVolume : '--'}</div>
+              <div className='f1 tac'>{item.walletAddressCount ? item.walletAddressCount : '--'}</div>
+              <div className='f2 tac'>
+                <GamesItemStatus status={item.status === 'Beta' ? 'yellow' : item.status === 'In Development' ? 'blue' : ''}>{item.status}</GamesItemStatus>
+              </div>
+            </GamesContentItem>
+          )
+        }
+      </GamesContent> */}
+      <Content>
+        {/* {
           gamesArr.map(item =>
             <ContentItemBox>
               <ContentItem onClick={() => { goGameDetail(item) }}>
@@ -293,7 +529,7 @@ export default function Games() {
               </ContentItem>
             </ContentItemBox>
           )
-        }
+        } */}
         {/* <ContentItemBox>
           <ContentItemComingSoon >
             <EnlargementBgBox style={{ backgroundImage: `url(${banner4})` }} />

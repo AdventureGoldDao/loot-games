@@ -37,6 +37,7 @@ export const symbolImgObj = {
   'TRX': tron,
 }
 export const chainTypeImgObj = {
+  Ethereum: eth,
   mainnet: eth,
   basegoerli: base,
   ropsten: eth,
@@ -56,6 +57,7 @@ export const chainTypeImgObj = {
   klaytn: klaytn,
   baobab: klaytn,
   loot: loot,
+  Loot: loot,
   loottest: loot,
   tron: tron,
   shasta: tron,
