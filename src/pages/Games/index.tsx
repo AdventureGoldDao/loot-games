@@ -10,6 +10,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay, Thumbs, FreeMode } from "swiper";
+import 'swiper/swiper.min.css';
+import "swiper/swiper-bundle.min.css";
 
 import { chainTypeImgObj, chainTxtObj, chainFun, symbolImgObj } from '../../utils/networkConnect';
 import { formatAmountWithDecimal } from '../../utils/format'
@@ -32,16 +36,18 @@ const EnlargementBgBox = styled.div`
 const Main = styled.div`
   position: relative;
   min-height: 100vh;
-  padding: 102px 100px 70px 100px;
+  /* padding: 102px 100px 70px 100px; */
+  padding: 72px 0px 70px 0px;
 
   @media screen and (min-width: ${BREAKPOINTS.xxl}px) {
-    padding-right: 150px;
+    /* padding-right: 150px; */
+    padding: 0px;
   }
   @media screen and (min-width: ${BREAKPOINTS.xxxl}px) {
-    padding-right: 300px;
+    padding: 300px;
   }
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
-    padding: 16px;
+    padding: 0;
   }
 `
 const BgBox = styled.div`
@@ -102,6 +108,25 @@ const GameInfoBox = styled.div`
     margin-right: 0;
   }
 `
+const GameInfoBoxSwiper = styled.div`
+  position: relative;
+  top: 0;
+  transition: top 0.2s;
+  flex: auto;
+  min-height: 600px;
+  height: 100%;
+  overflow: hidden;
+  &:hover {
+    top: -5px;
+  }
+  &:hover ${EnlargementBgBox} {
+    transform: scale(1.2, 1.2);
+  }
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    margin-right: 0;
+    min-height: 400px;
+  }
+`
 const GamesRightBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -113,8 +138,8 @@ const GamesRightBoxItem = styled.div`
   position: relative;
   top: 0;
   transition: top 0.2s;
-  width: 180px;
-  height: 105px;
+  width: 140px;
+  height: 70px;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -349,6 +374,22 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableSortLabel = styled(TableSortLabel)`
   color: #85A391;
 `
+const StyledSwiper = styled(Swiper)`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 600px;
+  height: 100px;
+  align-items: center;
+  line-height: 80px;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    display: none;
+  }
+`
+const StyledSwiperSlide = styled(SwiperSlide)`
+  display: flex ;
+  align-items: center;
+`
 
 export default function Games() {
   const [selectGame, setSelectGame] = useState<any>();
@@ -358,6 +399,7 @@ export default function Games() {
   const [order, setOrder] = useState<any>('twitterDesc');
   const [orderStatus, setOrderStatus] = useState<any>('desc');
   const [orderBy, setOrderBy] = useState('twitter');
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const goGameWebsite = () => {
     history.push(`/games/${selectGame.gameId}`)
@@ -373,17 +415,12 @@ export default function Games() {
   const queryRecommond = async () => {
     let data: any = await queryGameList('', true, 1, 5)
     setRecommendList(data.list)
-    console.log(data.list);
     // setSelectGame(data.list[0])
   }
   const handleRequestSort = (event, property) => {
-    console.log(event);
-    console.log(property);
     const isAsc = orderBy === property && orderStatus === 'asc';
     setOrderStatus(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-    console.log(isAsc);
-    console.log(isAsc);
     let order = 'twitterAsc'
     switch (property) {
       case 'twitter':
@@ -422,8 +459,6 @@ export default function Games() {
         }
         break;
     }
-    console.log(order);
-
     queryList(order)
   };
   const createSortHandler = (property) => (event) => {
@@ -440,7 +475,56 @@ export default function Games() {
   return (
     <Main>
       <BgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
-      <GamesBox>
+      <div className='pr'>
+        <Swiper
+          style={{
+          }}
+          spaceBetween={10}
+          thumbs={{ swiper: thumbsSwiper }}
+          modules={[FreeMode, Navigation, Thumbs]}
+          className="mySwiper2"
+        >
+          {
+            gameList.slice(1, 6).map(item =>
+              <SwiperSlide key={item.gameId}>
+                <GameInfoBoxSwiper>
+                  <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
+                  <ShadeBox>
+                    <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{item.name}</div>
+                    <div className='df_align_center mb20'>
+                      {
+                        item.tags.map(tag => <Tag status=''>{tag}</Tag>)
+                      }
+                    </div>
+                    <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</div>
+                    <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
+                  </ShadeBox>
+                </GameInfoBoxSwiper>
+              </SwiperSlide>
+            )
+          }
+        </Swiper>
+        <StyledSwiper
+          onSwiper={setThumbsSwiper}
+          spaceBetween={10}
+          slidesPerView={4}
+          freeMode={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs]}
+          className="mySwiper"
+        >
+          {
+            gameList.slice(1, 6).map(item =>
+              <StyledSwiperSlide key={item.banner}>
+                <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
+                <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
+              </GamesRightBoxItem>
+              </StyledSwiperSlide>
+            )
+          }
+        </StyledSwiper>
+      </div>
+      {/* <GamesBox>
         <GameInfoBox>
           <EnlargementBgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
           <ShadeBox>
@@ -462,13 +546,9 @@ export default function Games() {
               </GamesRightBoxItem>
             )
           }
-          {/* <ComingSoonBox>
-            <EnlargementBgBox style={{ backgroundImage: `url(${banner4})` }} />
-          </ComingSoonBox> */}
         </GamesRightBox>
-      </GamesBox>
+      </GamesBox> */}
       <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
-        {/* <img width={44} src={upcoming} /> */}
         <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
       </div>
       <Paper sx={{ width: '100%', overflow: 'hidden', background: 'transparent' }}>
@@ -544,10 +624,10 @@ export default function Games() {
                         </GamesItemNameBox>
                       </StyledTableCell>
                       <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.twitterFollowerCount ? formatAmountWithDecimal(row.twitterFollowerCount,0,0)  : '--'}</div>
+                        <div className='f1 tac c_f'>{row.twitterFollowerCount ? formatAmountWithDecimal(row.twitterFollowerCount, 0, 0) : '--'}</div>
                       </StyledTableCell>
                       <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.discordFollowerCount ? formatAmountWithDecimal(row.discordFollowerCount,0,0) : '--'}</div>
+                        <div className='f1 tac c_f'>{row.discordFollowerCount ? formatAmountWithDecimal(row.discordFollowerCount, 0, 0) : '--'}</div>
                       </StyledTableCell>
                       <StyledTableCell className='f1' key={row.id} align={'left'}>
                         <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>
