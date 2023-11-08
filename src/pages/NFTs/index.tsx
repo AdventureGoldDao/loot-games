@@ -48,7 +48,8 @@ const Main = styled.div`
 `
 const HomeSwiper = styled.div`
   position: relative;
-  padding: 60px 100px;
+  padding: 72px 100px 30px;
+  margin-top: -72px;
 
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     display: none;
@@ -313,7 +314,7 @@ export default function Games() {
     window.open(item.collectionLink)
   }
   const slideChange = (event) => {
-    let a = countIndex(gamesArr.length, event.activeIndex)
+    let a = countIndex(NFTist.length, event.activeIndex)
     setSwiperIndex(a - 1)
   }
   const countIndex = (a, b) => {

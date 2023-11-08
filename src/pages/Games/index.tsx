@@ -9,8 +9,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableSortLabel from '@mui/material/TableSortLabel';
 
 import { chainTypeImgObj, chainTxtObj, chainFun, symbolImgObj } from '../../utils/networkConnect';
+import { formatAmountWithDecimal } from '../../utils/format'
 import { BREAKPOINTS } from 'theme';
 import { gamesArr } from 'pages/GameDetail'
 import upcoming from 'assets/img/home/icon_upcoming.png'
@@ -334,7 +336,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#111211',
     color: '#85A391',
-    padding: '0 10px',
+    padding: '0',
     borderBottom: 'none',
     lineHeight: '24px',
   },
@@ -344,12 +346,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
+const StyledTableSortLabel = styled(TableSortLabel)`
+  color: #85A391;
+`
 
 export default function Games() {
   const [selectGame, setSelectGame] = useState<any>();
   const [gameList, setGameList] = useState([]);
   const [recommendList, setRecommendList] = useState(gamesArr[0]);
   const history = useHistory()
+  const [order, setOrder] = useState<any>('twitterDesc');
+  const [orderStatus, setOrderStatus] = useState<any>('desc');
+  const [orderBy, setOrderBy] = useState('twitter');
 
   const goGameWebsite = () => {
     history.push(`/games/${selectGame.gameId}`)
@@ -357,8 +365,8 @@ export default function Games() {
   const goGameDetail = (item) => {
     history.push(`/games/${item.gameId}`)
   }
-  const queryList = async () => {
-    let data: any = await queryGameList('', false, 1, 999)
+  const queryList = async (order) => {
+    let data: any = await queryGameList('', false, 1, 999, order)
     setGameList(data.list)
     setSelectGame(data.list[0])
   }
@@ -368,10 +376,65 @@ export default function Games() {
     console.log(data.list);
     // setSelectGame(data.list[0])
   }
+  const handleRequestSort = (event, property) => {
+    console.log(event);
+    console.log(property);
+    const isAsc = orderBy === property && orderStatus === 'asc';
+    setOrderStatus(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+    console.log(isAsc);
+    console.log(isAsc);
+    let order = 'twitterAsc'
+    switch (property) {
+      case 'twitter':
+        if (isAsc) {
+          order = 'twitterDesc'
+        } else {
+          order = 'twitterAsc'
+        }
+        break;
+      case 'discord':
+        if (isAsc) {
+          order = 'discordDesc'
+        } else {
+          order = 'discordAsc'
+        }
+        break;
+      case 'nftVolume':
+        if (isAsc) {
+          order = 'nftVolumeDesc'
+        } else {
+          order = 'nftVolumeAsc'
+        }
+        break;
+      case 'status':
+        if (isAsc) {
+          order = 'statusDesc'
+        } else {
+          order = 'statusAsc'
+        }
+        break;
+      default:
+        if (isAsc) {
+          order = 'twitterDesc'
+        } else {
+          order = 'twitterAsc'
+        }
+        break;
+    }
+    console.log(order);
+
+    queryList(order)
+  };
+  const createSortHandler = (property) => (event) => {
+    console.log(property);
+
+    handleRequestSort(event, property);
+  };
 
   useEffect(() => {
     queryRecommond()
-    queryList()
+    queryList(order)
   }, [])
 
   return (
@@ -405,7 +468,7 @@ export default function Games() {
         </GamesRightBox>
       </GamesBox>
       <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
-        <img width={44} src={upcoming} />
+        {/* <img width={44} src={upcoming} /> */}
         <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
       </div>
       <Paper sx={{ width: '100%', overflow: 'hidden', background: 'transparent' }}>
@@ -413,26 +476,50 @@ export default function Games() {
           <Table stickyHeader aria-label="sticky table">
             <StyledTableHead>
               <StyledTableRow>
-                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
                   {''}
                 </StyledTableCell>
-                <StyledTableCell  className='f2' align={'left'} style={{ minWidth: '170px' }} >
+                <StyledTableCell className='f2' align={'left'} style={{ minWidth: '170px' }} >
                   {'Name'}
                 </StyledTableCell>
-                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  {'Twitter'}
+                <StyledTableCell sortDirection={'asc'} className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  <TableSortLabel
+                    active={orderBy === 'twitter'}
+                    direction={orderBy === 'twitter' ? orderStatus : 'desc'}
+                    onClick={createSortHandler('twitter')}
+                  >
+                    {'Twitter'}
+                  </TableSortLabel>
                 </StyledTableCell>
-                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  {'Discord'}
+                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  <TableSortLabel
+                    active={orderBy === 'discord'}
+                    direction={orderBy === 'discord' ? orderStatus : 'desc'}
+                    onClick={createSortHandler('discord')}
+                  >
+                    {'Discord'}
+                  </TableSortLabel>
                 </StyledTableCell>
-                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  {'NFT Volume'}
+                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  <TableSortLabel
+                    active={orderBy === 'nftVolume'}
+                    direction={orderBy === 'nftVolume' ? orderStatus : 'desc'}
+                    onClick={createSortHandler('nftVolume')}
+                  >
+                    {'NFT Volume'}
+                  </TableSortLabel>
                 </StyledTableCell>
-                <StyledTableCell  className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
                   {'Wallet address'}
                 </StyledTableCell>
-                <StyledTableCell  className='f2' align={'center'} style={{ minWidth: '170px' }} >
-                  {'Status'}
+                <StyledTableCell className='f2' align={'center'} style={{ minWidth: '170px' }} >
+                  <TableSortLabel
+                    active={orderBy === 'status'}
+                    direction={orderBy === 'status' ? orderStatus : 'desc'}
+                    onClick={createSortHandler('status')}
+                  >
+                    {'Status'}
+                  </TableSortLabel>
                 </StyledTableCell>
               </StyledTableRow>
             </StyledTableHead>
@@ -442,7 +529,7 @@ export default function Games() {
                   return (
                     <StyledBodyTableRow onClick={() => { goGameDetail(row) }} hover role="checkbox" tabIndex={-1} key={row.id}>
                       <StyledTableCell className='f1' align={'left'}>
-                        <GamesItemImg  src={row.banner}></GamesItemImg>
+                        <GamesItemImg src={row.banner}></GamesItemImg>
                       </StyledTableCell>
                       <StyledTableCell className='f2' align={'left'}>
                         <GamesItemNameBox>
@@ -457,10 +544,10 @@ export default function Games() {
                         </GamesItemNameBox>
                       </StyledTableCell>
                       <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.twitterFollowerCount ? row.twitterFollowerCount : '--'}</div>
+                        <div className='f1 tac c_f'>{row.twitterFollowerCount ? formatAmountWithDecimal(row.twitterFollowerCount,0,0)  : '--'}</div>
                       </StyledTableCell>
                       <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.discordFollowerCount ? row.discordFollowerCount : '--'}</div>
+                        <div className='f1 tac c_f'>{row.discordFollowerCount ? formatAmountWithDecimal(row.discordFollowerCount,0,0) : '--'}</div>
                       </StyledTableCell>
                       <StyledTableCell className='f1' key={row.id} align={'left'}>
                         <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>

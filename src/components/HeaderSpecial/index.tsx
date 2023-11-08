@@ -47,10 +47,14 @@ const Logo = styled.img`
   height: 22px;
 `
 const NavLink = styled(Link) <{ active: boolean }>`
+  display: inline-block;
+  height: 72px;
+  line-height: 72px;
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   color: ${props => props.active ? '#A5FFBE' : '#fff'};
+  border-bottom: 2px solid ${props => props.active ? '#A5FFBE' : 'transparent'};
   &:hover {
     color: #A5FFBE;
   }

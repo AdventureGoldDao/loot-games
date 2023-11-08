@@ -59,6 +59,7 @@ import { Tag } from 'pages/Games'
 import BadgeCard from "components/BadgeCard";
 import NoData from "../../components/NoData";
 import { queryGameDetial, queryGameNFT } from "services/games"
+import { formatAmountWithDecimal } from "../../utils/format"
 
 const Main = styled.div`
   position: relative;
@@ -165,6 +166,9 @@ const SocialnBox = styled.div`
   font-size: 14px;
   font-weight: 400;
   color: #EBEBEB;
+  :last-of-type {
+    border-right: none;
+  }
 
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     border-right: none;
@@ -188,11 +192,18 @@ const LinkBox = styled.div`
   }
 `
 const LinkA = styled.a`
-  display: block;
-  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  text-decoration: none;
   svg {
     display: block;
   }
+`
+const PlayNow = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 const BoxHr = styled.div`
   height: 30px;
@@ -503,7 +514,7 @@ export const gamesArr = [
 
 ]
 
-const tabArr = ['Overview', 'X Feed', 'Advanced Description', 'Collections', 'Leaderboard', 'Play']
+const tabArr = ['Overview', 'X Feed', 'Advanced Description', 'Collections', 'Play']
 const availablePlatforms = {
   Website:WebsiteIcon2,
   iOS:IOSIcon,
@@ -547,7 +558,6 @@ export default function GameDetail() {
     <Main>
       {
         gameInfo?.name?<>
-
         <BgBox style={{ backgroundImage: `url(${gameInfo?.banner})` }} />
         <PageHeader key={id} data-aos="ease-out" data-aos-duration={5000}>
           <div className="df_align_center_h5">
@@ -582,41 +592,43 @@ export default function GameDetail() {
                 <span className="mr17">Status</span>
                 <Tag status={gameInfo.status==='Beta'?'yellow':gameInfo.status==='In Development'?'blue':''}>{gameInfo.status}</Tag>
               </div>
-              <div className="df_align_center">
+              <div className="df_align_center_h5">
                 <SocialnBox className="mr17">
-                  <XIcon />
-                  <span className='pl10 fs18'>{gameInfo.twitterFollowerCount?gameInfo.twitterFollowerCount:'--'}</span>
+                {
+                    gameInfo.twitter ?
+                    <LinkA href={gameInfo.twitter} target='_blank'><XIcon />
+                      <span className='pl10 fs18'>{gameInfo.twitterFollowerCount?formatAmountWithDecimal(gameInfo.twitterFollowerCount,0,0):'--'}</span>
+                    </LinkA>:
+                    <>
+                    <XIcon />
+                    <span className='pl10 fs18'>{gameInfo.twitterFollowerCount?formatAmountWithDecimal(gameInfo.twitterFollowerCount,0,0):'--'}</span>
+                    </>
+                  }
                 </SocialnBox>
                 <SocialnBox className="mr17">
-                  <DiscordIcon />
-                  <span className='pl10 fs18'>{gameInfo.discordFollowerCount?gameInfo.discordFollowerCount:'--'}</span>
+                  {
+                    gameInfo.discord ?
+                    <LinkA href={gameInfo.discord} target='_blank'><DiscordIcon />
+                    <span className='pl10 fs18'>{gameInfo.discordFollowerCount?formatAmountWithDecimal(gameInfo.discordFollowerCount,0,0):'--'}</span>
+                    </LinkA>:
+                    <>
+                    <DiscordIcon />
+                    <span className='pl10 fs18'>{gameInfo.discordFollowerCount?formatAmountWithDecimal(gameInfo.discordFollowerCount,0,0):'--'}</span>
+                    </>
+                  }
                 </SocialnBox>
                 <SocialnBox className="mr17">
-                  <GithubIcon />
-                  <span className='pl10 fs18'>{gameInfo.githubFollowerCount?gameInfo.githubFollowerCount:'--'}</span>
+                  {
+                    gameInfo.website &&
+                    <LinkA href={gameInfo.website} target='_blank'><WebsiteIcon />
+                    <span className='pl10 fs18'>{gameInfo.website}</span>
+                    </LinkA>
+                  }
                 </SocialnBox>
               </div>
             </div>
           </div>
-          <div className="df_column_between">
-            <LinkBox>
-              {
-                gameInfo.website &&
-                <LinkA href={gameInfo.website} target='_blank'><WebsiteIcon /></LinkA>
-              }
-              {
-                gameInfo.twitter && <>
-                  <BoxHr />
-                  <LinkA href={gameInfo.twitter} target='_blank'><TwitterIcon /></LinkA>
-                </>
-              }
-              {
-                gameInfo.discord && <>
-                  <BoxHr />
-                  <LinkA href={gameInfo.discord} target='_blank'><DiscordIcon /></LinkA>
-                </>
-              }
-            </LinkBox>
+          <PlayNow>
             <Button disabled={gameInfo.comingSoon} onClick={goPlay} style={{ height: 40 }} className="w180 btn_multicolour">
               {
                 gameInfo.comingSoon ?
@@ -625,7 +637,7 @@ export default function GameDetail() {
                   <span>Play Now<ShareIcon width={9} height={9} style={{ marginLeft: 8 }} /></span>
               }
             </Button>
-          </div>
+          </PlayNow>
         </PageHeader>
 
         <ContentBox >
@@ -708,7 +720,7 @@ export default function GameDetail() {
               }
             </CollectionBox>
           }
-          {
+          {/* {
             currentTab === tabArr[4] && <>
               {
                 gameInfo.leaderboardLink ?
@@ -719,9 +731,9 @@ export default function GameDetail() {
                   </CollectionBox>
               }
             </>
-          }
+          } */}
           {
-            currentTab === tabArr[5] &&
+            currentTab === tabArr[4] &&
             <iframe width="100%" height="1000px" src={gameInfo.website} frameBorder="0"></iframe>
           }
         </ContentBox>

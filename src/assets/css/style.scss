@@ -753,6 +753,13 @@ button {
   .MuiTableRow-root {
     display: flex;
   }
+  .MuiTableSortLabel-root {
+    color: #85A391 !important;
+    .MuiTableSortLabel-icon {
+      color: #85A391 !important;
+      // opacity: 1;
+    }
+  }
   .MuiTableCell-body {
     padding: 0;
   }
