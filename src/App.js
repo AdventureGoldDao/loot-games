@@ -21,13 +21,13 @@ function getLibrary(provider) {
 
 const routeArr = [
   {
-    component: Games, path: '/games', special: 'game'
+    component: Games, path: '/games', special: 'games',parent:'games'
   },
   {
-    component: GameDetail, path: '/games/:id', special: 'game'
+    component: GameDetail, path: '/games/:id', special: 'game',parent:'games'
   },
   {
-    component: NFTs, path: '/nfts', special: 'nfts'
+    component: NFTs, path: '/nfts', special: 'nfts',parent:'nfts'
   },
 ]
 
