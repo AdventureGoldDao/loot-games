@@ -20,7 +20,7 @@ import { formatAmountWithDecimal } from '../../utils/format'
 import { BREAKPOINTS } from 'theme';
 import { gamesArr } from 'pages/GameDetail'
 import upcoming from 'assets/img/home/icon_upcoming.png'
-import { queryGameList } from 'services/games'
+import { queryGameList,getMedium } from 'services/games'
 
 const EnlargementBgBox = styled.div`
   position: absolute;
@@ -50,6 +50,10 @@ const Main = styled.div`
     padding: 0;
   }
 `
+const MainSwiper = styled.div`
+  position: relative;
+  margin-top: -72px;
+`
 const BgBox = styled.div`
   position: absolute;
   top: 0;
@@ -74,7 +78,7 @@ const GamesBox = styled.div`
   display: flex;
 `
 const ShadeBox = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  background: linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 100%);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -85,6 +89,7 @@ const ShadeBox = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+  margin: auto;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     padding: 20px;
   }
@@ -113,11 +118,11 @@ const GameInfoBoxSwiper = styled.div`
   top: 0;
   transition: top 0.2s;
   flex: auto;
-  min-height: 600px;
+  min-height: 672px;
   height: 100%;
   overflow: hidden;
   &:hover {
-    top: -5px;
+    /* top: -5px; */
   }
   &:hover ${EnlargementBgBox} {
     transform: scale(1.2, 1.2);
@@ -148,7 +153,7 @@ const GamesRightBoxItem = styled.div`
     margin-bottom: 0;
   }
   &:hover {
-    top: -5px;
+    /* top: -5px; */
     border: 1px solid #A5FFBE;
   }
   &:hover ${EnlargementBgBox} {
@@ -342,7 +347,7 @@ const StyledTableRow = styled(TableRow)`
   display: flex !important;
   width: 100%;
   padding: 0 10px;
-  border: 1px solid #85A391;
+  border: 1px solid #4B5954;
   border-radius: 10px;
   background-color: #111211;
 `
@@ -352,7 +357,7 @@ const StyledBodyTableRow = styled(TableRow)`
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #85A391;
+  border: 1px solid #4B5954;
   border-radius: 10px;
   background-color: #111211;
   cursor: pointer;
@@ -376,8 +381,7 @@ const StyledTableSortLabel = styled(TableSortLabel)`
 `
 const StyledSwiper = styled(Swiper)`
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  right: 0;
   width: 600px;
   height: 100px;
   align-items: center;
@@ -386,9 +390,55 @@ const StyledSwiper = styled(Swiper)`
     display: none;
   }
 `
+const WidthBoxSwiper = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: calc((100vw - 1200px)/2);
+  width: 1200px;
+  height: 100px;
+  text-align: right;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    width: 100%;
+  }
+
+`
 const StyledSwiperSlide = styled(SwiperSlide)`
   display: flex ;
   align-items: center;
+`
+const WidthBox = styled.div`
+  width: 1200px;
+  margin: auto;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    width: 100%;
+  }
+`
+const MediumItem = styled.div`
+  position: relative;
+  width: 400px;
+  height: 250px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid #4B5954;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: contain;
+  overflow: hidden;
+  cursor: pointer;
+  :last-of-type {
+    margin-right: 0px;
+  }
+`
+const MediumShadeItem = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+  background: linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 100%);
 `
 
 export default function Games() {
@@ -400,6 +450,7 @@ export default function Games() {
   const [orderStatus, setOrderStatus] = useState<any>('desc');
   const [orderBy, setOrderBy] = useState('twitter');
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [articlesList, setArticlesList] = useState([])
 
   const goGameWebsite = () => {
     history.push(`/games/${selectGame.gameId}`)
@@ -462,20 +513,25 @@ export default function Games() {
     queryList(order)
   };
   const createSortHandler = (property) => (event) => {
-    console.log(property);
-
     handleRequestSort(event, property);
   };
+  const queryMediums = async () => {
+    let res = await getMedium()
+    setArticlesList(res)
+    console.log(res);
+    
+  }
 
   useEffect(() => {
     queryRecommond()
     queryList(order)
+    queryMediums()
   }, [])
 
   return (
     <Main>
-      <BgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
-      <div className='pr'>
+      {/* <BgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} /> */}
+      <MainSwiper className='pr'>
         <Swiper
           style={{
           }}
@@ -490,40 +546,44 @@ export default function Games() {
                 <GameInfoBoxSwiper>
                   <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
                   <ShadeBox>
-                    <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{item.name}</div>
-                    <div className='df_align_center mb20'>
-                      {
-                        item.tags.map(tag => <Tag status=''>{tag}</Tag>)
-                      }
-                    </div>
-                    <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</div>
-                    <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
+                    <WidthBox>
+                      <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{item.name}</div>
+                      <div className='df_align_center mb20'>
+                        {
+                          item.tags.map(tag => <Tag status=''>{tag}</Tag>)
+                        }
+                      </div>
+                      <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</div>
+                      <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
+                    </WidthBox>
                   </ShadeBox>
                 </GameInfoBoxSwiper>
               </SwiperSlide>
             )
           }
         </Swiper>
-        <StyledSwiper
-          onSwiper={setThumbsSwiper}
-          spaceBetween={10}
-          slidesPerView={4}
-          freeMode={true}
-          watchSlidesProgress={true}
-          modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper"
-        >
-          {
-            gameList.slice(1, 6).map(item =>
-              <StyledSwiperSlide key={item.banner}>
-                <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
-                <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
-              </GamesRightBoxItem>
-              </StyledSwiperSlide>
-            )
-          }
-        </StyledSwiper>
-      </div>
+        <WidthBoxSwiper>
+          <StyledSwiper
+            onSwiper={setThumbsSwiper}
+            spaceBetween={10}
+            slidesPerView={4}
+            freeMode={true}
+            watchSlidesProgress={true}
+            modules={[FreeMode, Navigation, Thumbs]}
+            className="mySwiper"
+          >
+            {
+              gameList.slice(1, 6).map(item =>
+                <StyledSwiperSlide key={item.banner}>
+                  <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
+                    <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
+                  </GamesRightBoxItem>
+                </StyledSwiperSlide>
+              )
+            }
+          </StyledSwiper>
+        </WidthBoxSwiper>
+      </MainSwiper>
       {/* <GamesBox>
         <GameInfoBox>
           <EnlargementBgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
@@ -548,106 +608,124 @@ export default function Games() {
           }
         </GamesRightBox>
       </GamesBox> */}
-      <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
-        <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
-      </div>
-      <Paper sx={{ width: '100%', overflow: 'hidden', background: 'transparent' }}>
-        <TableContainer >
-          <Table stickyHeader aria-label="sticky table">
-            <StyledTableHead>
-              <StyledTableRow>
-                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  {''}
-                </StyledTableCell>
-                <StyledTableCell className='f2' align={'left'} style={{ minWidth: '170px' }} >
-                  {'Name'}
-                </StyledTableCell>
-                <StyledTableCell sortDirection={'asc'} className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  <TableSortLabel
-                    active={orderBy === 'twitter'}
-                    direction={orderBy === 'twitter' ? orderStatus : 'desc'}
-                    onClick={createSortHandler('twitter')}
-                  >
-                    {'Twitter'}
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  <TableSortLabel
-                    active={orderBy === 'discord'}
-                    direction={orderBy === 'discord' ? orderStatus : 'desc'}
-                    onClick={createSortHandler('discord')}
-                  >
-                    {'Discord'}
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  <TableSortLabel
-                    active={orderBy === 'nftVolume'}
-                    direction={orderBy === 'nftVolume' ? orderStatus : 'desc'}
-                    onClick={createSortHandler('nftVolume')}
-                  >
-                    {'NFT Volume'}
-                  </TableSortLabel>
-                </StyledTableCell>
-                <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                  {'Wallet address'}
-                </StyledTableCell>
-                <StyledTableCell className='f2' align={'center'} style={{ minWidth: '170px' }} >
-                  <TableSortLabel
-                    active={orderBy === 'status'}
-                    direction={orderBy === 'status' ? orderStatus : 'desc'}
-                    onClick={createSortHandler('status')}
-                  >
-                    {'Status'}
-                  </TableSortLabel>
-                </StyledTableCell>
-              </StyledTableRow>
-            </StyledTableHead>
-            <TableBody>
-              {gameList
-                .map((row) => {
-                  return (
-                    <StyledBodyTableRow onClick={() => { goGameDetail(row) }} hover role="checkbox" tabIndex={-1} key={row.id}>
-                      <StyledTableCell className='f1' align={'left'}>
-                        <GamesItemImg src={row.banner}></GamesItemImg>
-                      </StyledTableCell>
-                      <StyledTableCell className='f2' align={'left'}>
-                        <GamesItemNameBox>
-                          <GamesItemName>{row.name}</GamesItemName>
-                          <GamesItemNameBoxChain>
-                            {
-                              row.supportChains?.map(chain => (
-                                <ChainImg src={chainTypeImgObj[chain]} />
-                              ))
-                            }
-                          </GamesItemNameBoxChain>
-                        </GamesItemNameBox>
-                      </StyledTableCell>
-                      <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.twitterFollowerCount ? formatAmountWithDecimal(row.twitterFollowerCount, 0, 0) : '--'}</div>
-                      </StyledTableCell>
-                      <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.discordFollowerCount ? formatAmountWithDecimal(row.discordFollowerCount, 0, 0) : '--'}</div>
-                      </StyledTableCell>
-                      <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>
-                      </StyledTableCell>
-                      <StyledTableCell className='f1' key={row.id} align={'left'}>
-                        <div className='f1 tac c_f'>{row.walletAddressCount ? row.walletAddressCount : '--'}</div>
-                      </StyledTableCell>
-                      <StyledTableCell className='f2' key={row.id} align={'center'}>
-                        <GamesItemStatus status={row.status === 'Beta' ? 'yellow' : row.status === 'In Development' ? 'blue' : ''}>{row.status}</GamesItemStatus>
+      <WidthBox>
+        <div className='space-between-center mt30 mb20'>
+          <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Latest News</div>
+          <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
+        </div>
+        <div className='df mb10'>
+        {
+            articlesList.slice(1, 4).map(item =>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={() => { setSelectGame(item) }}>
+                <MediumShadeItem>
+                  <p>AGLD DAO and Gabby World</p>
+                </MediumShadeItem>
+                {/* <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} /> */}
+              </MediumItem>
+            )
+          }
+        </div>
+        <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
+          <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
+        </div>
+        <Paper sx={{ width: '100%', overflow: 'hidden', background: 'transparent' }}>
+          <TableContainer >
+            <Table stickyHeader aria-label="sticky table">
+              <StyledTableHead>
+                <StyledTableRow>
+                  <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                    {''}
+                  </StyledTableCell>
+                  <StyledTableCell className='f2' align={'left'} style={{ minWidth: '170px' }} >
+                    {'Name'}
+                  </StyledTableCell>
+                  <StyledTableCell sortDirection={'asc'} className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                    <TableSortLabel
+                      active={orderBy === 'twitter'}
+                      direction={orderBy === 'twitter' ? orderStatus : 'desc'}
+                      onClick={createSortHandler('twitter')}
+                    >
+                      {'Twitter'}
+                    </TableSortLabel>
+                  </StyledTableCell>
+                  <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                    <TableSortLabel
+                      active={orderBy === 'discord'}
+                      direction={orderBy === 'discord' ? orderStatus : 'desc'}
+                      onClick={createSortHandler('discord')}
+                    >
+                      {'Discord'}
+                    </TableSortLabel>
+                  </StyledTableCell>
+                  <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                    <TableSortLabel
+                      active={orderBy === 'nftVolume'}
+                      direction={orderBy === 'nftVolume' ? orderStatus : 'desc'}
+                      onClick={createSortHandler('nftVolume')}
+                    >
+                      {'NFT Volume'}
+                    </TableSortLabel>
+                  </StyledTableCell>
+                  <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                    {'Wallet address'}
+                  </StyledTableCell>
+                  <StyledTableCell className='f2' align={'center'} style={{ minWidth: '170px' }} >
+                    <TableSortLabel
+                      active={orderBy === 'status'}
+                      direction={orderBy === 'status' ? orderStatus : 'desc'}
+                      onClick={createSortHandler('status')}
+                    >
+                      {'Status'}
+                    </TableSortLabel>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </StyledTableHead>
+              <TableBody>
+                {gameList
+                  .map((row) => {
+                    return (
+                      <StyledBodyTableRow onClick={() => { goGameDetail(row) }} hover role="checkbox" tabIndex={-1} key={row.id}>
+                        <StyledTableCell className='f1' align={'left'}>
+                          <GamesItemImg src={row.banner}></GamesItemImg>
+                        </StyledTableCell>
+                        <StyledTableCell className='f2' align={'left'}>
+                          <GamesItemNameBox>
+                            <GamesItemName>{row.name}</GamesItemName>
+                            <GamesItemNameBoxChain>
+                              {
+                                row.supportChains?.map(chain => (
+                                  <ChainImg src={chainTypeImgObj[chain]} />
+                                ))
+                              }
+                            </GamesItemNameBoxChain>
+                          </GamesItemNameBox>
+                        </StyledTableCell>
+                        <StyledTableCell className='f1' key={row.id} align={'left'}>
+                          <div className='f1 tac c_f'>{row.twitterFollowerCount ? formatAmountWithDecimal(row.twitterFollowerCount, 0, 0) : '--'}</div>
+                        </StyledTableCell>
+                        <StyledTableCell className='f1' key={row.id} align={'left'}>
+                          <div className='f1 tac c_f'>{row.discordFollowerCount ? formatAmountWithDecimal(row.discordFollowerCount, 0, 0) : '--'}</div>
+                        </StyledTableCell>
+                        <StyledTableCell className='f1' key={row.id} align={'left'}>
+                          <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>
+                        </StyledTableCell>
+                        <StyledTableCell className='f1' key={row.id} align={'left'}>
+                          <div className='f1 tac c_f'>{row.walletAddressCount ? row.walletAddressCount : '--'}</div>
+                        </StyledTableCell>
+                        <StyledTableCell className='f2' key={row.id} align={'center'}>
+                          <GamesItemStatus status={row.status === 'Beta' ? 'yellow' : row.status === 'In Development' ? 'blue' : ''}>{row.status}</GamesItemStatus>
 
-                      </StyledTableCell>
-                      {/* );
+                        </StyledTableCell>
+                        {/* );
                       })} */}
-                    </StyledBodyTableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+                      </StyledBodyTableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </WidthBox>
       {/* <GamesHeader>
         <GamesHeaderItem className='f1'></GamesHeaderItem>
         <GamesHeaderItem className='f2 pl20'>Name</GamesHeaderItem>
