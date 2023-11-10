@@ -44,7 +44,7 @@ const Main = styled.div`
     padding: 0px;
   }
   @media screen and (min-width: ${BREAKPOINTS.xxxl}px) {
-    padding: 300px;
+    padding: 0px;
   }
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     padding: 0;
