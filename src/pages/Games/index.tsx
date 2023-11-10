@@ -91,7 +91,16 @@ const ShadeBox = styled.div`
   align-items: flex-start;
   margin: auto;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
-    padding: 20px;
+    padding: 70px 20px 20px;
+  }
+`
+const ShadeBoxTitle = styled.div`
+  margin-bottom: 20px;
+  font-size: 46px;
+  color: #A5FFBE;
+  font-weight: 600;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+      font-size: 36px;
   }
 `
 const GameInfoBox = styled.div`
@@ -411,6 +420,22 @@ const WidthBox = styled.div`
   margin: auto;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     width: 100%;
+    padding: 20px;
+  }
+`
+const NewsHead = styled.div`
+  margin-top: 30px;
+  margin-bottom: 20px;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    margin-top: 0px;
+
+  }
+`
+const NewsBox = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    flex-direction: column;
   }
 `
 const MediumItem = styled.div`
@@ -428,6 +453,12 @@ const MediumItem = styled.div`
   cursor: pointer;
   :last-of-type {
     margin-right: 0px;
+  }
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    width: 100%;
+    height: 180px;
+    margin-right: 0px;
+    margin-bottom: 10px;
   }
 `
 const MediumShadeItem = styled.div`
@@ -547,7 +578,7 @@ export default function Games() {
                   <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
                   <ShadeBox>
                     <WidthBox>
-                      <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{item.name}</div>
+                      <ShadeBoxTitle>{item.name}</ShadeBoxTitle>
                       <div className='df_align_center mb20'>
                         {
                           item.tags.map(tag => <Tag status=''>{tag}</Tag>)
@@ -584,47 +615,22 @@ export default function Games() {
           </StyledSwiper>
         </WidthBoxSwiper>
       </MainSwiper>
-      {/* <GamesBox>
-        <GameInfoBox>
-          <EnlargementBgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} />
-          <ShadeBox>
-            <div style={{ color: '#A5FFBE', fontSize: 46, fontWeight: 800, marginBottom: 20 }}>{selectGame?.name}</div>
-            <div className='df_align_center mb20'>
-              {
-                selectGame?.tags.map(item => <Tag status=''>{item}</Tag>)
-              }
-            </div>
-            <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{selectGame?.description}</div>
-            <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
-          </ShadeBox>
-        </GameInfoBox>
-        <GamesRightBox>
-          {
-            gameList.slice(2, 6).map(item =>
-              <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
-                <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
-              </GamesRightBoxItem>
-            )
-          }
-        </GamesRightBox>
-      </GamesBox> */}
       <WidthBox>
-        <div className='space-between-center mt30 mb20'>
+        <NewsHead className='space-between-center mt30 mb20'>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Latest News</div>
           <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
-        </div>
-        <div className='df mb10'>
+        </NewsHead>
+        <NewsBox>
         {
             articlesList.slice(1, 4).map(item =>
-              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={() => { setSelectGame(item) }}>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={()=> {window.open(item.link)}}>
                 <MediumShadeItem>
-                  <p>AGLD DAO and Gabby World</p>
+                  <p>{item.title}</p>
                 </MediumShadeItem>
-                {/* <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} /> */}
               </MediumItem>
             )
           }
-        </div>
+        </NewsBox>
         <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
         </div>
