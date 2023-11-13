@@ -58,8 +58,9 @@ import WebsiteIcon2 from 'assets/img/games/website2.svg'
 import { Tag } from 'pages/Games'
 import BadgeCard from "components/BadgeCard";
 import NoData from "../../components/NoData";
-import { queryGameDetial, queryGameNFT } from "services/games"
+import { queryGameDetial, queryGameNFT,queryTweetList,queryTweetUser } from "services/games"
 import { formatAmountWithDecimal } from "../../utils/format"
+import moment from 'moment';
 
 const Main = styled.div`
   position: relative;
@@ -312,8 +313,8 @@ const FeedTime = styled.div`
   line-height: normal;
 `
 const FeedImg = styled.img`
-  width: 252px;
-  height: 252px;
+  width: 500px;
+  height: auto;
   margin-right: 12px;
   border-radius: 10px;
   border: 1px solid var(--line-color2, #4B5954);
@@ -527,23 +528,45 @@ export default function GameDetail() {
   const { id } = useParams();
   const [gameInfo, setGameInfo] = useState<any>({});
   const [currentTab, setCurrentTab] = useState(tabArr[0]);
+  const [tweetUser, setTweetUser] = useState<any>({});
+  const [tweetList, setTweetList] = useState([]);
 
   const goPlay = () => {
     window.open(gameInfo.playLink)
   }
 
   const queryDetail = async () => {
-    let info = await queryGameDetial (id)
+    let info: any = await queryGameDetial (id)
     console.log(info);
     setGameInfo(info)
     queryNft(info)
+    queryFeed(info.twitterId)
+    queryFeedUser(info.twitterId)
   }
   const queryNft =async (info) => {
     let data: any = await queryGameNFT (id)
     let obj = {"collections":data.list}
     let a = Object.assign(info,obj)
-    console.log(a);
     setGameInfo(a)
+  }
+  const queryFeed =async (userId) => { 
+    let data = await queryTweetList (userId)
+    console.log(data);
+    let list = []
+    console.log(data);
+    data.data.forEach(item => {
+      if(item.attachments){
+        let obj = data.includes.media.filter(el => item.attachments.media_keys[0] ===el.media_key)
+        item.url = obj[0].url
+      }
+      list.push(item)
+    })
+    console.log(data.data);
+    setTweetList(data.data)
+  }
+  const queryFeedUser =async (userId) => { 
+    let data = await queryTweetUser (userId)
+    setTweetUser(data)
   }
 
   useEffect(() => {
@@ -680,21 +703,20 @@ export default function GameDetail() {
             currentTab === tabArr[1] && <div key={id} data-aos="fade-up" data-aos-duration={500}>
               <FeedBoxs>
                 {
-                  [1, 2, 3].map(item => (
+                  tweetList.map(item => (
                     <FeedBox key={item}>
                       <FeedBoxH>
-                        <FeedHead src={gameInfo.logo}></FeedHead>
+                        <FeedHead src={tweetUser.profile_image_url}></FeedHead>
                         <div className='pl10'>
-                          <FeedName>Mighty Magic HEROES</FeedName>
-                          <FeedTime>8:15AM Mar 30,2023</FeedTime>
+                          <FeedName>{tweetUser.name}</FeedName>
+                          <FeedTime>{moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</FeedTime>
                         </div>
                       </FeedBoxH>
-                      <div className='pt10 pb20'>Send us to 1,000 ❤️ and we can show you some pictures of the #cryptoNFT game 😉</div>
+                      <div className='pt10 pb20' dangerouslySetInnerHTML={{ __html: item.text}}></div>
                       <div>
                         {
-                          gameInfo.screenshots?.map(item => (
+                          item.url &&
                             <FeedImg key={item} src={item.url}></FeedImg>
-                          ))
                         }
                       </div>
                     </FeedBox>

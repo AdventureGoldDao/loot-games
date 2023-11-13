@@ -20,6 +20,9 @@ import { formatAmountWithDecimal } from '../../utils/format'
 import { BREAKPOINTS } from 'theme';
 import { gamesArr } from 'pages/GameDetail'
 import upcoming from 'assets/img/home/icon_upcoming.png'
+import bg from 'assets/img/games/bg.jpg'
+// import arrowR from 'assets/img/games/arrowR.svg'
+import { ReactComponent as ArrowR } from 'assets/img/games/arrowR.svg'
 import { queryGameList,getMedium } from 'services/games'
 
 const EnlargementBgBox = styled.div`
@@ -471,6 +474,76 @@ const MediumShadeItem = styled.div`
   padding: 30px;
   background: linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 100%);
 `
+const BannerBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 80px;
+`
+const GettingStart = styled.div`
+  color: #FFF;
+  font-family: Inconsolata;
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 30px;
+`
+const MultBanner = styled(Button)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 268px;
+  height: 56px;
+  border-radius: 30px !important;
+  border: 1px solid #01D3F0;
+  background: linear-gradient(180deg, rgba(1, 211, 240, 1), rgba(0, 87, 255, 1));
+  margin-right: 10px !important;
+  position: relative;
+  box-sizing: border-box;
+  color: #FFF;
+  /* border-radius: 25px; */
+  &::after{
+  content: "";
+	position: absolute;
+  z-index: -1;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  background: #000;
+  
+}
+`
+const TestBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 58px;
+  /* padding: 0 18px 0 30px; */
+  position: relative;
+  box-sizing: border-box;
+  color: #FFF;
+  border-radius: 25px;
+  font-family: 'IMFePIrm';
+  z-index: 1;
+	background: linear-gradient(130deg, rgba(1, 211, 240, 1), rgba(0, 87, 255, 1));
+ 
+
+&::after{
+  content: "";
+	position: absolute;
+  z-index: -1;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  background: #040821;
+  
+}`
+
 
 export default function Games() {
   const [selectGame, setSelectGame] = useState<any>();
@@ -615,13 +688,23 @@ export default function Games() {
           </StyledSwiper>
         </WidthBoxSwiper>
       </MainSwiper>
+      {/* <WidthBox style={{backgroundImage:`url(${bg})`}}>
+        <BannerBox>
+          <GettingStart >GETTING STARTED</GettingStart>
+          <div>
+            <MultBanner>Claim our AWNS <ArrowR></ArrowR></MultBanner>
+            <MultBanner>Enter the Loot Chain <ArrowR></ArrowR></MultBanner>
+          </div>
+          <TestBox><MultBanner>Claim our AWNS</MultBanner></TestBox>
+        </BannerBox>
+      </WidthBox> */}
       <WidthBox>
         <NewsHead className='space-between-center mt30 mb20'>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Latest News</div>
           <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
         </NewsHead>
         <NewsBox>
-        {
+          {
             articlesList.slice(1, 4).map(item =>
               <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={()=> {window.open(item.link)}}>
                 <MediumShadeItem>
@@ -631,6 +714,21 @@ export default function Games() {
             )
           }
         </NewsBox>
+        {/* <NewsHead className='space-between-center mt30 mb20'>
+          <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Guides</div>
+          <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
+        </NewsHead>
+        <NewsBox>
+          {
+            articlesList.slice(1, 4).map(item =>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={()=> {window.open(item.link)}}>
+                <MediumShadeItem>
+                  <p>{item.title}</p>
+                </MediumShadeItem>
+              </MediumItem>
+            )
+          }
+        </NewsBox> */}
         <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
         </div>

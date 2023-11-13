@@ -3,17 +3,33 @@ import http from 'utils/http'
 import axios from "axios";
 import env from '../env';
 
-export const queryGameList= (chainType, recommend, pageNo, pageSize,order) => {
-  return http.get(`/games`, {chainType, recommend, pageNo, pageSize,order })
+export const queryGameList = (chainType, recommend, pageNo, pageSize, order) => {
+  return http.get(`/games`, { chainType, recommend, pageNo, pageSize, order })
 }
-export const queryNFTList= (chainType, recommend, pageNo, pageSize) => {
-  return http.get(`/games/collections`, {chainType, recommend, pageNo, pageSize })
+export const queryNFTList = (chainType, recommend, pageNo, pageSize) => {
+  return http.get(`/games/collections`, { chainType, recommend, pageNo, pageSize })
 }
-export const queryGameNFT= (gameId, pageNo, pageSize) => {
+export const queryGameNFT = (gameId, pageNo, pageSize) => {
   return http.get(`/games/${gameId}/collections`, { pageNo, pageSize })
 }
-export const queryGameDetial= (gameId) => {
+export const queryGameDetial = (gameId) => {
   return http.get(`/games/${gameId}`)
+}
+export const queryTweetList = async (userId) => {
+  try {
+    let res = await axios.get(`${env.API_URL}/twitter/users/${userId}/tweets?media.fields=preview_image_url,url&tweet.fields=created_at,attachments&expansions=attachments.media_keys`)
+    return res.data
+  } catch (error) {
+  }
+
+}
+export const queryTweetUser = async (userId) => {
+  try {
+    let res = await axios.get(`${env.API_URL}/twitter/users/${userId}?user.fields=profile_image_url`)
+    return res.data.data
+  } catch (error) {
+    console.log(error);
+  }
 }
 export const getMedium = () => {
   return axios.get(`${env.API_URL}/medium/feed/@aglddao`).then(res => {
@@ -27,7 +43,7 @@ export const getMedium = () => {
     let gamesArr = itemArr.filter(item => {
       //  return item.include(/<category><![CDATA[ loot-nft ]]></category>/)
       let str = item.toString()
-       return str.includes('<category><![CDATA[blockchain]]></category>')
+      return str.includes('<category><![CDATA[blockchain]]></category>')
     })
     gamesArr.forEach(cell => {
       const obj = {};
