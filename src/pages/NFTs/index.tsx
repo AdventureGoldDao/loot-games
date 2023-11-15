@@ -20,17 +20,6 @@ import { gamesArr } from 'pages/GameDetail'
 import { queryNFTList } from 'services/games'
 
 
-const EnlargementBgBox = styled.div`
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  transition: transform 0.5s;
-`
 const Main = styled.div`
   position: relative;
   min-height: 100vh;
@@ -141,41 +130,6 @@ const MintBtn = styled.div`
     margin-top: 20px;
   }
 `
-const ShadeBox = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 59px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  @media screen and (max-width: ${BREAKPOINTS.md}px) {
-    padding: 20px;
-  }
-`
-const GameInfoBox = styled.div`
-  position: relative;
-  top: 0;
-  transition: top 0.2s;
-  flex: auto;
-  margin-right: 35px;
-  height: 495px;
-  border-radius: 20px;
-  overflow: hidden;
-  &:hover {
-    top: -5px;
-  }
-  &:hover ${EnlargementBgBox} {
-    transform: scale(1.2, 1.2);
-  }
-  @media screen and (max-width: ${BREAKPOINTS.md}px) {
-    margin-right: 0;
-  }
-`
 export const Tag = styled.div`
   height: 30px;
   line-height: 28px;
@@ -195,32 +149,7 @@ export const Tag = styled.div`
     padding: 0 14px;
   }
 `
-const GamesHeader = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  border: 1px solid #4B5954;
-  background: #111211;
-`
-const GamesHeaderItem = styled.div`
-  font-family: Inconsolata;
-  font-size: 16px;
-  color: #85A391;
-  line-height: 24px;
-`
-const GamesContent = styled.div`
-  
-`
-const GamesContentItem = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #4B5954;
-  background: #111211;
-  cursor: pointer;
-`
+
 const GamesItemImg = styled.img`
   width: 76px;
   height: 76px;
@@ -229,7 +158,7 @@ const GamesItemImg = styled.img`
   object-position: center;
 `
 const GamesItemNameBox = styled.div`
- padding-left: 20px;
+ padding-left: 0px;
 `
 const GamesItemName = styled.div`
   margin-bottom: 10px;
@@ -248,14 +177,7 @@ const ChainImg = styled.img`
   border-radius: 32px;
   margin-right: 17px;
 `
-const GamesItemStatus = styled.div`
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: 1px solid #4B5954;
-  background: #0E100F;
-  font-size: 14px;
-`
+
 const NFTsBox = styled.div`
   padding: 0 100px;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
@@ -307,9 +229,6 @@ export default function Games() {
   const [swiperIndex, setSwiperIndex] = useState(0)
   const history = useHistory()
 
-  const goGameWebsite = () => {
-    history.push(`/games/${selectGame.id}`)
-  }
   const goGameDetail = (item) => {
     window.open(item.collectionLink)
   }
@@ -418,7 +337,7 @@ export default function Games() {
             <Table stickyHeader aria-label="sticky table">
               <StyledTableHead>
                 <StyledTableRow>
-                  <StyledTableCell className='f1' align={'center'} style={{ minWidth: '100px' }} >
+                  <StyledTableCell className='w100' align={'center'} style={{ minWidth: '100px' }} >
                     {''}
                   </StyledTableCell>
                   <StyledTableCell className='f2' align={'left'} style={{ minWidth: '170px' }} >
@@ -446,7 +365,7 @@ export default function Games() {
                   .map((row) => {
                     return (
                       <StyledBodyTableRow onClick={() => { goGameDetail(row) }} hover role="checkbox" tabIndex={-1} key={row.id}>
-                        <StyledTableCell className='f1' align={'left'} style={{ minWidth: '100px' }}>
+                        <StyledTableCell className='w100' align={'left'} style={{ minWidth: '100px' }}>
                           <GamesItemImg src={row.image}></GamesItemImg>
                         </StyledTableCell>
                         <StyledTableCell className='f2' align={'left'}>
