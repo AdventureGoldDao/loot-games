@@ -20,10 +20,11 @@ import { formatAmountWithDecimal } from '../../utils/format'
 import { BREAKPOINTS } from 'theme';
 import { gamesArr } from 'pages/GameDetail'
 import upcoming from 'assets/img/home/icon_upcoming.png'
-import bg from 'assets/img/games/bg.jpg'
-// import arrowR from 'assets/img/games/arrowR.svg'
-import { ReactComponent as ArrowR } from 'assets/img/games/arrowR.svg'
-import { queryGameList,getMedium } from 'services/games'
+import bg from 'assets/img/games/bg.png'
+import defaultNews from 'assets/img/games/defaultNews.jpg'
+import defaultGuides from 'assets/img/games/defaultGuides.jpg'
+import { ReactComponent as ArrowR } from 'assets/img/games/arrow.svg'
+import { queryGameList,getMedium,getMediumGuide } from 'services/games'
 
 const EnlargementBgBox = styled.div`
   position: absolute;
@@ -102,8 +103,18 @@ const ShadeBoxTitle = styled.div`
   font-size: 46px;
   color: #A5FFBE;
   font-weight: 600;
+  font-family: 'IMFePIrm';
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
-      font-size: 36px;
+    font-size: 36px;
+  }
+`
+const ShadeBoxDes = styled.div`
+  margin-bottom: 30px;
+  font-size: 20px;
+  color: #EBEBEB;
+  font-weight: 400;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    font-size: 18px;
   }
 `
 const GameInfoBox = styled.div`
@@ -234,81 +245,6 @@ const ContentItem = styled.div`
     transform: scale(1.2, 1.2);
   }
 `
-const ContentItemComingSoon = styled.div`
-  position: relative;
-  top: 0;
-  transition: top 0.2s;
-  padding-bottom: 50%;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  border: 1px solid #4B5954;
-`
-const ShadeCard = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.88));
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 22px 27px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-`
-const NameTag = styled.div`
-  height: 45px;
-  line-height: 45px;
-  padding: 0 20px;
-  background-color: #000;
-  border-radius: 50px;
-  color: #EBEBEB;
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 6px;
-
-  @media screen and (max-width: ${BREAKPOINTS.md}px) {
-    height: 30px;
-    line-height: 30px;
-    padding: 0 20px;
-    font-size: 20px;
-  }
-`
-const DetailLine = styled.div`
-  line-height: 1.5;
-  color: #EBEBEB;
-  font-weight: 400;
-  width: 100%;
-`
-const GamesHeader = styled.div`
-  display: flex;
-  margin-bottom: 10px;
-  padding: 0 10px;
-  border-radius: 10px;
-  border: 1px solid #4B5954;
-  background: #111211;
-`
-const GamesHeaderItem = styled.div`
-  font-family: Inconsolata;
-  font-size: 16px;
-  color: #85A391;
-  line-height: 24px;
-  min-width: 120px;
-`
-const GamesContent = styled.div`
-  
-`
-const GamesContentItem = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #4B5954;
-  background: #111211;
-  cursor: pointer;
-`
 const GamesItemImg = styled.img`
   width: 126px;
   height: 76px;
@@ -321,16 +257,16 @@ const GamesItemImg = styled.img`
   }
 `
 const GamesItemNameBox = styled.div`
- padding-left: 20px;
+ padding-left: 10px;
 `
 const GamesItemName = styled.div`
   margin-bottom: 10px;
   color: #A5FFBE;
-  font-family: Inconsolata;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  font-family: 'IMFePIrm';
 `
 const GamesItemNameBoxChain = styled.div`
   display: flex;
@@ -362,6 +298,7 @@ const StyledTableRow = styled(TableRow)`
   border: 1px solid #4B5954;
   border-radius: 10px;
   background-color: #111211;
+  font-family: 'IMFePIrm' !important;
 `
 const StyledBodyTableRow = styled(TableRow)`
   display: flex !important;
@@ -476,13 +413,17 @@ const MediumShadeItem = styled.div`
 `
 const BannerBox = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 50px 80px;
+  padding: 40px 70px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  font-family: Ringbearer;
 `
 const GettingStart = styled.div`
   color: #FFF;
-  font-family: Inconsolata;
-  font-size: 46px;
+  font-family: Ringbearer;
+  font-size: 36px;
   font-style: normal;
   font-weight: 800;
   line-height: 30px;
@@ -491,58 +432,57 @@ const MultBanner = styled(Button)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 268px;
   height: 56px;
+  padding: 0 30px !important;
   border-radius: 30px !important;
   border: 1px solid #01D3F0;
-  background: linear-gradient(180deg, rgba(1, 211, 240, 1), rgba(0, 87, 255, 1));
-  margin-right: 10px !important;
-  position: relative;
-  box-sizing: border-box;
-  color: #FFF;
-  /* border-radius: 25px; */
-  &::after{
-  content: "";
-	position: absolute;
-  z-index: -1;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 30px;
-  background: #000;
-  
-}
+  background: linear-gradient(180deg, #07271D 39.06%, #02171A 100%);
+  color: #FFF !important;
+  font-family: Ringbearer !important;
+  font-size: 20px !important;
 `
 const TestBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 58px;
-  /* padding: 0 18px 0 30px; */
+  margin-right: 20px;
+  padding: 1px;
   position: relative;
   box-sizing: border-box;
   color: #FFF;
-  border-radius: 25px;
+  border-radius: 35px;
   font-family: 'IMFePIrm';
   z-index: 1;
-	background: linear-gradient(130deg, rgba(1, 211, 240, 1), rgba(0, 87, 255, 1));
- 
+	background: linear-gradient(90deg,#A5FFBE 0%,#89EB5B 100%);
 
-&::after{
-  content: "";
-	position: absolute;
-  z-index: -1;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 25px;
-  background: #040821;
-  
-}`
+  &:last-of-type {
+    margin-right: 0px;
+  }
+
+  &::after{
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 35px;
+    background: #040821;
+  }
+`
+const BlueTxt =styled.span`
+  color: #3FD1FF;
+  padding-left: 2px;
+  padding-right: 10px;
+`
+const GreenTxt =styled.span`
+  color: #A5FFBE;
+  padding-left: 2px;
+  padding-right: 10px;
+`
 
 
 export default function Games() {
@@ -555,6 +495,7 @@ export default function Games() {
   const [orderBy, setOrderBy] = useState('twitter');
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [articlesList, setArticlesList] = useState([])
+  const [guideList, setGuideList] = useState([])
 
   const goGameWebsite = () => {
     history.push(`/games/${selectGame.gameId}`)
@@ -570,7 +511,6 @@ export default function Games() {
   const queryRecommond = async () => {
     let data: any = await queryGameList('', true, 1, 5)
     setRecommendList(data.list)
-    // setSelectGame(data.list[0])
   }
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && orderStatus === 'asc';
@@ -622,14 +562,18 @@ export default function Games() {
   const queryMediums = async () => {
     let res = await getMedium()
     setArticlesList(res)
-    console.log(res);
-    
+    console.log(res); 
   }
-
+  const queryGuides = async () => {
+    let res = await getMediumGuide()
+    setGuideList(res)
+    console.log(res); 
+  }
   useEffect(() => {
     queryRecommond()
     queryList(order)
     queryMediums()
+    queryGuides()
   }, [])
 
   return (
@@ -657,7 +601,7 @@ export default function Games() {
                           item.tags.map(tag => <Tag status=''>{tag}</Tag>)
                         }
                       </div>
-                      <div className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</div>
+                      <ShadeBoxDes className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</ShadeBoxDes>
                       <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
                     </WidthBox>
                   </ShadeBox>
@@ -688,16 +632,15 @@ export default function Games() {
           </StyledSwiper>
         </WidthBoxSwiper>
       </MainSwiper>
-      {/* <WidthBox style={{backgroundImage:`url(${bg})`}}>
-        <BannerBox>
+      <WidthBox >
+        <BannerBox style={{backgroundImage:`url(${bg})`}}>
           <GettingStart >GETTING STARTED</GettingStart>
-          <div>
-            <MultBanner>Claim our AWNS <ArrowR></ArrowR></MultBanner>
-            <MultBanner>Enter the Loot Chain <ArrowR></ArrowR></MultBanner>
+          <div className='df'>
+          <TestBox><MultBanner>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner></TestBox>
+          <TestBox><MultBanner onClick={()=>{window.open('https://lootchain.com/')}}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner></TestBox>
           </div>
-          <TestBox><MultBanner>Claim our AWNS</MultBanner></TestBox>
         </BannerBox>
-      </WidthBox> */}
+      </WidthBox>
       <WidthBox>
         <NewsHead className='space-between-center mt30 mb20'>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Latest News</div>
@@ -705,8 +648,8 @@ export default function Games() {
         </NewsHead>
         <NewsBox>
           {
-            articlesList.slice(1, 4).map(item =>
-              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={()=> {window.open(item.link)}}>
+            articlesList.map(item =>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img?item.img:defaultNews})` }} onClick={()=> {window.open(item.link)}}>
                 <MediumShadeItem>
                   <p>{item.title}</p>
                 </MediumShadeItem>
@@ -714,21 +657,21 @@ export default function Games() {
             )
           }
         </NewsBox>
-        {/* <NewsHead className='space-between-center mt30 mb20'>
+        <NewsHead className='space-between-center mt30 mb20'>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Guides</div>
           <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
         </NewsHead>
         <NewsBox>
           {
-            articlesList.slice(1, 4).map(item =>
-              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img})` }} onClick={()=> {window.open(item.link)}}>
+            guideList.map(item =>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img?item.img:defaultGuides})` }} onClick={()=> {window.open(item.link)}}>
                 <MediumShadeItem>
                   <p>{item.title}</p>
                 </MediumShadeItem>
               </MediumItem>
             )
           }
-        </NewsBox> */}
+        </NewsBox>
         <div className='df_align_center mt24 mb24' style={{ marginLeft: '-15px' }}>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB', marginLeft: 11 }}>All Games</div>
         </div>
@@ -740,7 +683,7 @@ export default function Games() {
                   <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
                     {''}
                   </StyledTableCell>
-                  <StyledTableCell className='f2' align={'left'} style={{ minWidth: '170px' }} >
+                  <StyledTableCell className='f2 pl10' align={'left'} style={{ minWidth: '170px' }} >
                     {'Name'}
                   </StyledTableCell>
                   <StyledTableCell sortDirection={'asc'} className='f1' align={'center'} style={{ minWidth: '120px' }} >
