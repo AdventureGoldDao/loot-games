@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "@mui/material";
+import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro';
 import { useHistory } from 'react-router-dom'
 import Paper from '@mui/material/Paper';
@@ -24,7 +25,7 @@ import bg from 'assets/img/games/bg.png'
 import defaultNews from 'assets/img/games/defaultNews.jpg'
 import defaultGuides from 'assets/img/games/defaultGuides.jpg'
 import { ReactComponent as ArrowR } from 'assets/img/games/arrow.svg'
-import { queryGameList,getMedium,getMediumGuide } from 'services/games'
+import { queryGameList, getMedium, getMediumGuide } from 'services/games'
 
 const EnlargementBgBox = styled.div`
   position: absolute;
@@ -43,15 +44,46 @@ const Main = styled.div`
   /* padding: 102px 100px 70px 100px; */
   padding: 72px 0px 70px 0px;
 
-  @media screen and (min-width: ${BREAKPOINTS.xxl}px) {
-    /* padding-right: 150px; */
-    padding: 0px;
-  }
-  @media screen and (min-width: ${BREAKPOINTS.xxxl}px) {
-    padding: 0px;
-  }
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     padding: 0;
+  }
+`
+const NavBox = styled.div`
+  position: absolute;
+  top: 70px;
+  width: 100%;
+  margin: auto;
+  padding: 0 60px;
+  z-index: 2;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    top: 20px;
+    padding: 0px;
+  }
+`
+const MainHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 360px;
+  padding: 40px 0px 0px;
+  border-bottom: 1px solid rgba(255,255,255,.4);
+  font-family: 'Ringbearer';
+  font-weight: 600;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    width: 100%;
+    padding: 40px 0px 0;
+  }
+`
+const NavLink = styled(Link) <{ active: boolean }>`
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  color: ${props => props.active ? '#A5FFBE' : '#fff'};
+  border-bottom: 2px solid ${props => props.active ? '#A5FFBE' : 'transparent'};
+  &:hover {
+    color: #A5FFBE;
   }
 `
 const MainSwiper = styled.div`
@@ -95,7 +127,7 @@ const ShadeBox = styled.div`
   align-items: flex-start;
   margin: auto;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
-    padding: 70px 20px 20px;
+    padding: 70px 0px 20px;
   }
 `
 const ShadeBoxTitle = styled.div`
@@ -152,7 +184,7 @@ const GameInfoBoxSwiper = styled.div`
   }
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     margin-right: 0;
-    min-height: 400px;
+    min-height: 480px;
   }
 `
 const GamesRightBox = styled.div`
@@ -419,6 +451,14 @@ const BannerBox = styled.div`
   background-repeat: no-repeat;
   background-size: 100%;
   font-family: Ringbearer;
+  background-image: url(${bg});
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    padding: 0;
+    background-image: none;
+    div {
+      width: 100%;
+    }
+  }
 `
 const GettingStart = styled.div`
   color: #FFF;
@@ -427,11 +467,15 @@ const GettingStart = styled.div`
   font-style: normal;
   font-weight: 800;
   line-height: 30px;
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    display: none;
+  }
 `
 const MultBanner = styled(Button)`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
   height: 56px;
   padding: 0 30px !important;
   border-radius: 30px !important;
@@ -472,13 +516,18 @@ const TestBox = styled.div`
     border-radius: 35px;
     background: #040821;
   }
+  @media screen and (max-width: ${BREAKPOINTS.md}px) {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 20px;
+  }
 `
-const BlueTxt =styled.span`
+const BlueTxt = styled.span`
   color: #3FD1FF;
   padding-left: 2px;
   padding-right: 10px;
 `
-const GreenTxt =styled.span`
+const GreenTxt = styled.span`
   color: #A5FFBE;
   padding-left: 2px;
   padding-right: 10px;
@@ -496,6 +545,8 @@ export default function Games() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [articlesList, setArticlesList] = useState([])
   const [guideList, setGuideList] = useState([])
+  const [currentRoute, setCurrentRoute] = useState<any>({})
+  const location = useLocation();
 
   const goGameWebsite = () => {
     history.push(`/games/${selectGame.gameId}`)
@@ -562,12 +613,10 @@ export default function Games() {
   const queryMediums = async () => {
     let res = await getMedium()
     setArticlesList(res)
-    console.log(res); 
   }
   const queryGuides = async () => {
     let res = await getMediumGuide()
     setGuideList(res)
-    console.log(res); 
   }
   useEffect(() => {
     queryRecommond()
@@ -580,6 +629,27 @@ export default function Games() {
     <Main>
       {/* <BgBox style={{ backgroundImage: `url(${selectGame?.banner})` }} /> */}
       <MainSwiper className='pr'>
+        <NavBox>
+          <WidthBox>
+            <MainHeader>
+              <NavLink to='/games' active={location.pathname === '/games'}>Game</NavLink>
+              <NavLink to='/nfts' active={location.pathname === '/nfts'}>NFTs</NavLink>
+              {/* <div>NFTs</div> */}
+              <div className='cp' onClick={() => { window.open('https://forms.gle/eKeyD2VzRYKCMksM7') }}>Submit your game <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.5 1.5C4.64642 1.49986 4.78712 1.55682 4.89222 1.65877C4.99731 1.76072 5.0585 1.89964 5.0628 2.04599C5.0671 2.19235 5.01416 2.33461 4.91523 2.44256C4.8163 2.5505 4.67918 2.61561 4.533 2.62406L4.5 2.625H3C2.90539 2.62497 2.81427 2.6607 2.7449 2.72503C2.67553 2.78936 2.63303 2.87753 2.62594 2.97188L2.625 3V9C2.62497 9.09461 2.6607 9.18573 2.72503 9.2551C2.78936 9.32447 2.87753 9.36697 2.97188 9.37406L3 9.375H9C9.09461 9.37503 9.18573 9.3393 9.2551 9.27497C9.32447 9.21064 9.36697 9.12247 9.37406 9.02813L9.375 9V7.6875C9.37486 7.54108 9.43182 7.40038 9.53377 7.29528C9.63572 7.19019 9.77464 7.129 9.92099 7.1247C10.0674 7.1204 10.2096 7.17334 10.3176 7.27227C10.4255 7.3712 10.4906 7.50832 10.4991 7.6545L10.5 7.6875V9C10.5 9.38971 10.3483 9.76411 10.0771 10.0439C9.80587 10.3238 9.43639 10.4871 9.04688 10.4992L9 10.5H3C2.61029 10.5 2.23589 10.3483 1.95606 10.0771C1.67622 9.80587 1.51293 9.43639 1.50075 9.04688L1.5 9V3C1.5 2.6103 1.65168 2.23589 1.9229 1.95606C2.19413 1.67622 2.56361 1.51293 2.95312 1.50075L3 1.5H4.5ZM9 1.5C9.38971 1.5 9.76411 1.65168 10.0439 1.9229C10.3238 2.19413 10.4871 2.56361 10.4992 2.95313L10.5 3V4.875C10.5001 5.02142 10.4432 5.16212 10.3412 5.26722C10.2393 5.37231 10.1004 5.4335 9.95401 5.4378C9.80765 5.4421 9.66539 5.38916 9.55744 5.29023C9.4495 5.1913 9.38439 5.05418 9.37594 4.908L9.375 4.875V3.42038L4.89769 7.89788C4.79455 8.00162 4.65505 8.06109 4.50879 8.0637C4.36253 8.0663 4.221 8.01182 4.11424 7.91181C4.00748 7.8118 3.94387 7.67414 3.93692 7.52802C3.92997 7.3819 3.98021 7.23882 4.077 7.12913L4.10231 7.10231L8.57925 2.625H7.125C6.97858 2.62514 6.83788 2.56818 6.73278 2.46623C6.62769 2.36428 6.5665 2.22536 6.5622 2.07901C6.5579 1.93265 6.61084 1.79039 6.70977 1.68244C6.8087 1.5745 6.94582 1.50939 7.092 1.50094L7.125 1.5H9Z"
+                  fill="#fff"
+                />
+              </svg></div>
+            </MainHeader>
+          </WidthBox>
+        </NavBox>
         <Swiper
           style={{
           }}
@@ -633,23 +703,23 @@ export default function Games() {
         </WidthBoxSwiper>
       </MainSwiper>
       <WidthBox >
-        <BannerBox style={{backgroundImage:`url(${bg})`}}>
+        <BannerBox>
           <GettingStart >GETTING STARTED</GettingStart>
-          <div className='df'>
-          <TestBox><MultBanner>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner></TestBox>
-          <TestBox><MultBanner onClick={()=>{window.open('https://lootchain.com/')}}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner></TestBox>
+          <div className='df_h5'>
+            <TestBox><MultBanner onClick={() => { window.open('https://www.stp.network/awns') }}>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner></TestBox>
+            <TestBox><MultBanner onClick={() => { window.open('https://bridge.lootchain.com/bridge') }}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner></TestBox>
           </div>
         </BannerBox>
       </WidthBox>
       <WidthBox>
         <NewsHead className='space-between-center mt30 mb20'>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Latest News</div>
-          <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
+          <div className='cp' onClick={() => { window.open('https://medium.com/@aglddao') }}>View all &gt; </div>
         </NewsHead>
         <NewsBox>
           {
             articlesList.map(item =>
-              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img?item.img:defaultNews})` }} onClick={()=> {window.open(item.link)}}>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img ? item.img : defaultNews})` }} onClick={() => { window.open(item.link) }}>
                 <MediumShadeItem>
                   <p>{item.title}</p>
                 </MediumShadeItem>
@@ -659,12 +729,12 @@ export default function Games() {
         </NewsBox>
         <NewsHead className='space-between-center mt30 mb20'>
           <div style={{ fontSize: 30, fontWeight: 600, color: '#EBEBEB' }}>Guides</div>
-          <div className='cp' onClick={()=> {window.open('https://medium.com/@aglddao')}}>View all &gt; </div>
+          <div className='cp' onClick={() => { window.open('https://medium.com/@aglddao') }}>View all &gt; </div>
         </NewsHead>
         <NewsBox>
           {
             guideList.map(item =>
-              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img?item.img:defaultGuides})` }} onClick={()=> {window.open(item.link)}}>
+              <MediumItem key={item.title} style={{ backgroundImage: `url(${item.img ? item.img : defaultGuides})` }} onClick={() => { window.open(item.link) }}>
                 <MediumShadeItem>
                   <p>{item.title}</p>
                 </MediumShadeItem>
