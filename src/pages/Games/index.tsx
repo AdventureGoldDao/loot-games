@@ -706,8 +706,8 @@ export default function Games() {
         <BannerBox>
           <GettingStart >GETTING STARTED</GettingStart>
           <div className='df_h5'>
-            <TestBox><MultBanner>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner></TestBox>
-            <TestBox><MultBanner onClick={() => { window.open('https://lootchain.com/') }}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner></TestBox>
+            <TestBox><MultBanner onClick={() => { window.open('https://www.stp.network/awns') }}>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner></TestBox>
+            <TestBox><MultBanner onClick={() => { window.open('https://bridge.lootchain.com/bridge') }}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner></TestBox>
           </div>
         </BannerBox>
       </WidthBox>
