@@ -164,7 +164,7 @@ const Wrapper = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 25px;
-    background: #000;
+    background: rgba(0,0,0,.8);
  
   
 }
@@ -457,7 +457,7 @@ const HeaderSpecial = ({ currentRoute }) => {
           <div className="pl40 pr20">
             <Wrapper>
               <a href="https://lootchain.com">Home</a>
-              <p>Loot Console</p>
+              <a href="/games">Loot Console</a>
 
               <SelectBox
                 onClick={() => {
