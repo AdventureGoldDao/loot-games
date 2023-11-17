@@ -537,7 +537,6 @@ export default function GameDetail() {
 
   const queryDetail = async () => {
     let info: any = await queryGameDetial (id)
-    console.log(info);
     setGameInfo(info)
     queryNft(info)
     queryFeed(info.twitterId)
@@ -551,18 +550,21 @@ export default function GameDetail() {
   }
   const queryFeed =async (userId) => { 
     let data = await queryTweetList (userId)
-    console.log(data);
     let list = []
-    console.log(data);
-    data.data.forEach(item => {
-      if(item.attachments){
-        let obj = data.includes.media.filter(el => item.attachments.media_keys[0] ===el.media_key)
-        item.url = obj[0].url
-      }
-      list.push(item)
-    })
-    console.log(data.data);
-    setTweetList(data.data)
+    try {
+      data.data.forEach(item => {
+        if(item.attachments){
+          let obj = data.includes.media.filter(el => item.attachments.media_keys && item.attachments.media_keys[0] ===el.media_key)
+          if (obj && obj[0]) {
+            item.url = obj[0].url
+          }
+        }
+        list.push(item)
+      })
+      setTweetList(data.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
   const queryFeedUser =async (userId) => { 
     let data = await queryTweetUser (userId)
@@ -591,14 +593,14 @@ export default function GameDetail() {
                 <div className="df_align_center">
                   <span className="mr17">Available On</span>
                   {
-                    gameInfo.availablePlatforms?.map(item => <AvailableIcon src={availablePlatforms[item]} alt={item}></AvailableIcon>)
+                    gameInfo.availablePlatforms?.map(item => <AvailableIcon key={item} src={availablePlatforms[item]} alt={item}></AvailableIcon>)
                   }
                 </div>
                 <ChainBox className="df_align_center">
                   <span>Support Chain</span>
                   {
                     gameInfo.supportChains?.map(item => (
-                      <Tooltip title={chainTxtObj[item]} placement="right" arrow>
+                      <Tooltip key={item} title={chainTxtObj[item]} placement="right" arrow>
                         <ChainImg src={chainTypeImgObj[item]} />
                       </Tooltip>
                     ))
@@ -608,7 +610,7 @@ export default function GameDetail() {
               <div className="df_align_center mb20">
                 <span className="mr17">Genres</span>
                 {
-                  gameInfo.tags?.map(item => <Tag status=''>{item}</Tag>)
+                  gameInfo.tags?.map(item => <Tag key={item} status=''>{item}</Tag>)
                 }
               </div>
               <div className="df_align_center mb20">
@@ -704,7 +706,7 @@ export default function GameDetail() {
               <FeedBoxs>
                 {
                   tweetList.map(item => (
-                    <FeedBox key={item}>
+                    <FeedBox key={item.created_at}>
                       <FeedBoxH>
                         <FeedHead src={tweetUser.profile_image_url}></FeedHead>
                         <div className='pl10'>

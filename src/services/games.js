@@ -90,7 +90,7 @@ export const getMediumGuide = () => {
       let str = item.toString()
       return str.includes('<category><![CDATA[loot-chain-guide]]></category>')
     })
-    console.log(gamesArr);
+    // console.log(gamesArr);
     gamesArr.forEach(cell => {
       const obj = {};
       cell.replace(/<content:encoded><!\[CDATA\[<h3>[\s\S]*?<\/h3>/, word => {

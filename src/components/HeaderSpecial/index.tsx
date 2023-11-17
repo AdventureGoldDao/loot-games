@@ -31,7 +31,7 @@ import { ReactComponent as IconMirror } from "assets/svg/mirror.svg";
 import { ReactComponent as IconTwitter } from "assets/svg/twittter.svg";
 
 const Main = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0px;
   right: 0;
@@ -599,7 +599,7 @@ const HeaderSpecial = ({ currentRoute }) => {
           <div className="df aic">
             {
               ['Mirror', 'Discord', 'Twitter', 'Github'].map(item => (
-                <a target="_blank" href={SOCIAL[item]} className="pr20">{SOCIALIcons[item]}</a>
+                <a target="_blank" key={item} href={SOCIAL[item]} className="pr20">{SOCIALIcons[item]}</a>
               ))
             }
           </div>
