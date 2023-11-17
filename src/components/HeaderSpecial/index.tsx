@@ -427,10 +427,19 @@ const HeaderSpecial = ({ currentRoute }) => {
         setBgOpacity(0.5)
       }
     }
+    const closePop = () => {
+      console.log(1231231231)
+      setIshovered(false);
+      setIsDexhover(false);
+      setIsExploreHover(false);
+      setIshover(false);
+    }
     window.addEventListener('scroll', changeBg);
+    window.addEventListener('click', closePop);
 
     return () => {
       window.removeEventListener('scroll', changeBg);
+      window.removeEventListener('click', closePop);
     }
   }, [])
 
@@ -460,11 +469,12 @@ const HeaderSpecial = ({ currentRoute }) => {
               <a href="/games">Loot Console</a>
 
               <SelectBox
-                onClick={() => {
+                onClick={e => {
                   setIshovered(false);
                   setIsDexhover(false);
                   setIsExploreHover(false);
                   setIshover(!isHover);
+                  e.stopPropagation();
                 }}
                 ref={rootRef}
                 onMouseEnter={() => {
@@ -492,11 +502,12 @@ const HeaderSpecial = ({ currentRoute }) => {
                 )}
               </SelectBox>
               <SelectBox
-                onClick={() => {
+                onClick={e => {
                   setIshover(false);
                   setIsDexhover(false);
                   setIsExploreHover(false);
                   setIshovered(!isHovered);
+                  e.stopPropagation();
                 }}
                 onMouseEnter={() => {
                   setIshover(false);
@@ -528,11 +539,12 @@ const HeaderSpecial = ({ currentRoute }) => {
                 )}
               </SelectBox>
               <div
-                onClick={() => {
+                onClick={e => {
                   setIshover(false);
                   setIsExploreHover(false);
                   setIshovered(false);
                   setIsDexhover(!isDexHover);
+                  e.stopPropagation();
                 }}
                 onMouseEnter={() => {
                   setIshover(false);

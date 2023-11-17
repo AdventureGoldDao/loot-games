@@ -484,6 +484,321 @@ const MultBanner = styled(Button)`
   color: #FFF !important;
   font-family: Ringbearer !important;
   font-size: 20px !important;
+  position: relative;
+`
+const GlowwormBox1 = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events:none;
+  & > div{
+    position: absolute;
+    left: 0;
+    background-image: radial-gradient(rgba(167, 217, 232, 0.8), rgba(101, 194, 223, 0.6), rgba(63, 209, 255, 0.8));
+    border-radius: 50%;
+  }
+  & > div:nth-child(1) {
+    width: 5px;
+    height: 5px;
+    left: 10px;
+    top: 2px;
+    animation: shadow1 2s 0.3s infinite, move1 10s 2s infinite;
+  }
+  & > div:nth-child(2) {
+    width: 8px;
+    height: 8px;
+    left: 50px;
+    top: 60px;
+    animation: shadow1 2s 1s infinite, move1 10s 4s infinite;
+  }
+  & > div:nth-child(3) {
+    width: 6px;
+    height: 6px;
+    left: 110px;
+    bottom: 0;
+    animation: shadow1 2s 0.4s infinite, move1 10s 3.2s infinite;
+  }
+  & > div:nth-child(4) {
+    width: 10px;
+    height: 10px;
+    left: 210px;
+    top: 0;
+    animation: shadow1 2s 0.1s infinite, move1 10s 3s infinite;
+  }
+  & > div:nth-child(5) {
+    width: 5px;
+    height: 5px;
+    left: 70%;
+    bottom: 20px;
+    animation: shadow1 2s 0.9s infinite, move1 10s 1s infinite;
+  }
+  & > div:nth-child(6) {
+    width: 8px;
+    height: 8px;
+    left: 200px;
+    top: 80px;
+    animation: shadow1 2s 1.3s infinite, move1 10s 4.3s infinite;
+  }
+  & > div:nth-child(7) {
+    width: 8px;
+    height: 8px;
+    left: 0px;
+    top: 30px;
+    animation: shadow1 2s 1.3s infinite, move1 10s 1.5s infinite;
+  }
+  & > div:nth-child(8) {
+    width: 8px;
+    height: 8px;
+    left: -20%;
+    top: 80px;
+    animation: shadow1 2s 1.3s infinite, move1 10s 2.5s infinite;
+  }
+  & > div:nth-child(9) {
+    width: 8px;
+    height: 8px;
+    left: 80%;
+    top: 10px;
+    animation: shadow1 2s 1.3s infinite, move1 10s 3.5s infinite;
+  }
+  & > div:nth-child(10) {
+    width: 8px;
+    height: 8px;
+    left: 90%;
+    top: 130px;
+    animation: shadow1 2s 1.3s infinite, move1 10s 2.2s infinite;
+  }
+
+  @keyframes shadow1 {
+    0% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.1);
+    }
+    10% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.2);
+    }
+    20% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.4);
+    }
+    30% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.6);
+    }
+    40% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.8);
+    }
+    50% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 1);
+    }
+    60% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.8);
+    }
+    70% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.6);
+    }
+    80% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.4);
+    }
+    90% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.2);
+    }
+    100% {
+      box-shadow: 0px 0px 5px 5px rgba(63, 209, 255, 0.1);
+    }
+  }
+
+  @keyframes move1 {
+    0% {
+      transform: translate(0, 0);
+    }
+    10% {
+      transform: translate(-20px, 10px);
+    }
+    20% {
+      transform: translate(10px, 10px);
+    }
+    30% {
+      transform: translate(30px, -20px);
+    }
+    40% {
+      transform: translate(10px, 0px);
+    }
+    50% {
+      transform: translate(10px, -10px);
+    }
+    60% {
+      transform: translate(10px, 10px);
+    }
+    70% {
+      transform: translate(-10px, 20px);
+    }
+    80% {
+      transform: translate(25px, 35px);
+    }
+    90% {
+      transform: translate(10px, 20px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+`
+const GlowwormBox2 = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events:none;
+  & > div{
+    position: absolute;
+    left: 0;
+    background-image: radial-gradient(rgba(255, 255, 199, 0.8), rgba(203, 255, 138, 0.6), rgba(105, 193, 114, 0.8));
+    border-radius: 50%;
+  }
+  & > div:nth-child(1) {
+    width: 5px;
+    height: 5px;
+    left: 10px;
+    top: 2px;
+    animation: shadow2 2s 0.3s infinite, move2 10s 2s infinite;
+  }
+  & > div:nth-child(2) {
+    width: 8px;
+    height: 8px;
+    left: 50px;
+    top: 60px;
+    animation: shadow2 2s 1s infinite, move2 10s 4s infinite;
+  }
+  & > div:nth-child(3) {
+    width: 6px;
+    height: 6px;
+    left: 110px;
+    bottom: 0;
+    animation: shadow2 2s 0.4s infinite, move2 10s 3.2s infinite;
+  }
+  & > div:nth-child(4) {
+    width: 10px;
+    height: 10px;
+    left: 210px;
+    top: 0;
+    animation: shadow2 2s 0.1s infinite, move2 10s 3s infinite;
+  }
+  & > div:nth-child(5) {
+    width: 5px;
+    height: 5px;
+    left: 70%;
+    bottom: 20px;
+    animation: shadow2 2s 0.9s infinite, move2 10s 1s infinite;
+  }
+  & > div:nth-child(6) {
+    width: 8px;
+    height: 8px;
+    left: 200px;
+    top: 80px;
+    animation: shadow2 2s 1.3s infinite, move2 10s 4.3s infinite;
+  }
+  & > div:nth-child(7) {
+    width: 8px;
+    height: 8px;
+    left: 0px;
+    top: 30px;
+    animation: shadow2 2s 1.3s infinite, move2 10s 1.5s infinite;
+  }
+  & > div:nth-child(8) {
+    width: 8px;
+    height: 8px;
+    left: -20%;
+    top: 80px;
+    animation: shadow2 2s 1.3s infinite, move2 10s 2.5s infinite;
+  }
+  & > div:nth-child(9) {
+    width: 8px;
+    height: 8px;
+    left: 80%;
+    top: 10px;
+    animation: shadow2 2s 1.3s infinite, move2 10s 3.5s infinite;
+  }
+  & > div:nth-child(10) {
+    width: 8px;
+    height: 8px;
+    left: 90%;
+    top: 130px;
+    animation: shadow2 2s 1.3s infinite, move2 10s 2.2s infinite;
+  }
+
+  @keyframes shadow2 {
+    0% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.1);
+    }
+    10% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.2);
+    }
+    20% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.4);
+    }
+    30% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.6);
+    }
+    40% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.8);
+    }
+    50% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 1);
+    }
+    60% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.8);
+    }
+    70% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.6);
+    }
+    80% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.4);
+    }
+    90% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.2);
+    }
+    100% {
+      box-shadow: 0px 0px 5px 5px rgba(105, 193, 114, 0.1);
+    }
+  }
+
+  @keyframes move2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    10% {
+      transform: translate(-20px, 10px);
+    }
+    20% {
+      transform: translate(10px, 10px);
+    }
+    30% {
+      transform: translate(30px, -20px);
+    }
+    40% {
+      transform: translate(10px, 0px);
+    }
+    50% {
+      transform: translate(10px, -10px);
+    }
+    60% {
+      transform: translate(10px, 10px);
+    }
+    70% {
+      transform: translate(-10px, 20px);
+    }
+    80% {
+      transform: translate(25px, 35px);
+    }
+    90% {
+      transform: translate(10px, 20px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
 `
 const TestBox = styled.div`
   display: flex;
@@ -515,6 +830,15 @@ const TestBox = styled.div`
     transform: translate(-50%, -50%);
     border-radius: 35px;
     background: #040821;
+  }
+  &:hover {
+    ${GlowwormBox1} {
+      opacity: 1;
+    }
+    ${GlowwormBox2} {
+      opacity: 1;
+    }
+    top: -3px;
   }
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     width: 100%;
@@ -706,8 +1030,30 @@ export default function Games() {
         <BannerBox>
           <GettingStart >GETTING STARTED</GettingStart>
           <div className='df_h5'>
-            <TestBox><MultBanner onClick={() => { window.open('https://www.stp.network/awns') }}>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner></TestBox>
-            <TestBox><MultBanner onClick={() => { window.open('https://bridge.lootchain.com/bridge') }}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner></TestBox>
+            <TestBox>
+              <MultBanner onClick={() => { window.open('https://www.stp.network/awns') }}>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner>
+              <GlowwormBox1>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </GlowwormBox1>
+            </TestBox>
+            <TestBox>
+              <MultBanner onClick={() => { window.open('https://bridge.lootchain.com/bridge') }}>Enter the <GreenTxt> Loot Chain</GreenTxt> <ArrowR></ArrowR></MultBanner>
+              <GlowwormBox2>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </GlowwormBox2>
+            </TestBox>
           </div>
         </BannerBox>
       </WidthBox>
