@@ -428,7 +428,6 @@ const HeaderSpecial = ({ currentRoute }) => {
       }
     }
     const closePop = () => {
-      console.log(1231231231)
       setIshovered(false);
       setIsDexhover(false);
       setIsExploreHover(false);

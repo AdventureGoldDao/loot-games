@@ -1130,7 +1130,7 @@ export default function Games() {
                     </TableSortLabel>
                   </StyledTableCell>
                   <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
-                    {'Wallet address'}
+                    {'Active Holders'}
                   </StyledTableCell>
                   <StyledTableCell className='f2' align={'center'} style={{ minWidth: '170px' }} >
                     <TableSortLabel
