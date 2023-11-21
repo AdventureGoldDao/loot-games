@@ -1031,7 +1031,7 @@ export default function Games() {
           <GettingStart >GETTING STARTED</GettingStart>
           <div className='df_h5'>
             <TestBox>
-              <MultBanner onClick={() => { window.open('https://www.stp.network/awns') }}>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner>
+              <MultBanner onClick={() => { window.open('https://awns.stp.network') }}>Claim your <BlueTxt> AWNS</BlueTxt> <ArrowR></ArrowR></MultBanner>
               <GlowwormBox1>
                 <div></div>
                 <div></div>
