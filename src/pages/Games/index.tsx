@@ -983,7 +983,7 @@ export default function Games() {
           className="mySwiper2"
         >
           {
-            gameList.slice(1, 6).map(item =>
+            gameList.length>0 ? gameList.slice(1, 6).map(item =>
               <SwiperSlide key={item.gameId}>
                 <GameInfoBoxSwiper>
                   <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
@@ -1001,7 +1001,26 @@ export default function Games() {
                   </ShadeBox>
                 </GameInfoBoxSwiper>
               </SwiperSlide>
-            )
+            ):
+            gamesArr.slice(1,6).map(item =>(
+              <SwiperSlide key={item.id}>
+                <GameInfoBoxSwiper>
+                  <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
+                  <ShadeBox>
+                    <WidthBox>
+                      <ShadeBoxTitle>{item.name}</ShadeBoxTitle>
+                      <div className='df_align_center mb20'>
+                        {
+                          item.tags.map(tag => <Tag status=''>{tag}</Tag>)
+                        }
+                      </div>
+                      <ShadeBoxDes className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</ShadeBoxDes>
+                      <Button onClick={goGameWebsite} className='btn_themeColor' style={{ paddingLeft: 32, paddingRight: 32 }}>Learn More</Button>
+                    </WidthBox>
+                  </ShadeBox>
+                </GameInfoBoxSwiper>
+              </SwiperSlide>
+            ))
           }
         </Swiper>
         <WidthBoxSwiper>
@@ -1173,7 +1192,7 @@ export default function Games() {
                           <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>
                         </StyledTableCell>
                         <StyledTableCell className='f1' key={row.id} align={'left'}>
-                          <div className='f1 tac c_f'>{row.walletAddressCount ? row.walletAddressCount : '--'}</div>
+                          <div className='f1 tac c_f'>{row.walletAddressCount ? formatAmountWithDecimal(row.walletAddressCount, 0, 0) : '--'}</div>
                         </StyledTableCell>
                         <StyledTableCell className='f2' key={row.id} align={'center'}>
                           <GamesItemStatus status={row.status === 'Beta' ? 'yellow' : row.status === 'In Development' ? 'blue' : ''}>{row.status}</GamesItemStatus>
