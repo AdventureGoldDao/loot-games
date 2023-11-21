@@ -204,6 +204,10 @@ const SelectTitle = styled.div`
     opacity: 0.8;
   }
 `
+const SelectImg = styled.img`
+  width: 8px;
+  height: 5px;
+`
 const Selector = styled.ul`
   position: absolute;
   border: 1px solid #FDFFAC;
@@ -250,7 +254,7 @@ const GetAGLD = styled.div`
   & p {
     margin-top: 0;
     margin-right: 8px;
-    font-size: 0.875rem;
+    font-size: 14px;
     font-family: 'IMFePIit';
     // font-style: italic;
     color: #213425;
@@ -462,7 +466,7 @@ const HeaderSpecial = ({ currentRoute }) => {
           <div className="df aic">
             <Link to="/games"><Logo src={logoFull} /></Link>
           </div>
-          <div className="pl40 pr20">
+          <div>
             <Wrapper>
               <a href="https://lootchain.com">Home</a>
               <a href="/games">Loot Console</a>
@@ -486,11 +490,11 @@ const HeaderSpecial = ({ currentRoute }) => {
               >
                 <SelectTitle>
                   <p>Loot Chain</p>
-                  <img src={greenIcon} alt="icon" />
+                  <SelectImg src={greenIcon} alt="icon" />
                 </SelectTitle>
                 {isHover && (
                   <Selector >
-                    <a href="https://mainnet.lootchain.com/">Loot Chain</a>
+                    {/* <a href="https://mainnet.lootchain.com/">Loot Chain</a> */}
                     <a href="https://explorer.lootchain.com">Loot Scan</a>
                     <a href="https://bridge.lootchain.com/bridge">Bridge</a>
                     <a href="https://soswap.rai.finance/#/swap">Soswap</a>
@@ -649,7 +653,7 @@ const HeaderSpecial = ({ currentRoute }) => {
             <li><a href="/games">Loot Console</a></li>
             <li>Loot Chain</li>
             <NavUlChild>
-              <li><a href="https://mainnet.lootchain.com/">Loot Chain</a></li>
+              {/* <li><a href="https://mainnet.lootchain.com/">Loot Chain</a></li> */}
               <li><a href="https://explorer.lootchain.com">Loot Scan</a></li>
               <li><a href="https://bridge.lootchain.com/bridge">Bridge</a></li>
               <li><a href="https://soswap.rai.finance/#/swap">Soswap</a></li>
