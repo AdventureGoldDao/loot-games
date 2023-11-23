@@ -523,7 +523,7 @@ const HeaderSpecial = ({ currentRoute }) => {
               >
                 <SelectTitle>
                   <p>More</p>
-                  <img src={greenIcon} alt="icon" />
+                  <SelectImg src={greenIcon} alt="icon" />
                 </SelectTitle>
                 {isHovered && (
                   <Selector>
