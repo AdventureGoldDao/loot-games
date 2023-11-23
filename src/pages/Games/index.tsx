@@ -1139,7 +1139,7 @@ export default function Games() {
                       {'Discord'}
                     </TableSortLabel>
                   </StyledTableCell>
-                  <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
+                  {/* <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
                     <TableSortLabel
                       active={orderBy === 'nftVolume'}
                       direction={orderBy === 'nftVolume' ? orderStatus : 'desc'}
@@ -1147,7 +1147,7 @@ export default function Games() {
                     >
                       {'NFT Volume'}
                     </TableSortLabel>
-                  </StyledTableCell>
+                  </StyledTableCell> */}
                   <StyledTableCell className='f1' align={'center'} style={{ minWidth: '120px' }} >
                     {'Active Holders'}
                   </StyledTableCell>
@@ -1188,9 +1188,9 @@ export default function Games() {
                         <StyledTableCell className='f1' key={row.id} align={'left'}>
                           <div className='f1 tac c_f'>{row.discordFollowerCount ? formatAmountWithDecimal(row.discordFollowerCount, 0, 0) : '--'}</div>
                         </StyledTableCell>
-                        <StyledTableCell className='f1' key={row.id} align={'left'}>
+                        {/* <StyledTableCell className='f1' key={row.id} align={'left'}>
                           <div className='f1 tac c_f'>{row.nftVolume ? row.nftVolume : '--'}</div>
-                        </StyledTableCell>
+                        </StyledTableCell> */}
                         <StyledTableCell className='f1' key={row.id} align={'left'}>
                           <div className='f1 tac c_f'>{row.walletAddressCount ? formatAmountWithDecimal(row.walletAddressCount, 0, 0) : '--'}</div>
                         </StyledTableCell>
