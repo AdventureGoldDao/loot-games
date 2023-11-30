@@ -3,8 +3,11 @@ import http from 'utils/http'
 import axios from "axios";
 import env from '../env';
 
-export const queryGameList = (chainType, recommend, pageNo, pageSize, order) => {
-  return http.get(`/games`, { chainType, recommend, pageNo, pageSize, order })
+export const queryGameList = (chainType, pageNo, pageSize, order) => {
+  return http.get(`/games`, { chainType, pageNo, pageSize, order })
+}
+export const queryGameRecommend = ( recommend, pageNo, pageSize) => {
+  return http.get(`/games`, { recommend, pageNo, pageSize })
 }
 export const queryNFTList = (chainType, recommend, pageNo, pageSize) => {
   return http.get(`/games/collections`, { chainType, recommend, pageNo, pageSize })

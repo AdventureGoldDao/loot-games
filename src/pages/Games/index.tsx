@@ -25,7 +25,7 @@ import bg from 'assets/img/games/bg.png'
 import defaultNews from 'assets/img/games/defaultNews.jpg'
 import defaultGuides from 'assets/img/games/defaultGuides.jpg'
 import { ReactComponent as ArrowR } from 'assets/img/games/arrow.svg'
-import { queryGameList, getMedium, getMediumGuide } from 'services/games'
+import { queryGameList,queryGameRecommend, getMedium, getMediumGuide } from 'services/games'
 
 const EnlargementBgBox = styled.div`
   position: absolute;
@@ -367,6 +367,7 @@ const StyledSwiper = styled(Swiper)`
   height: 100px;
   align-items: center;
   line-height: 80px;
+  z-index: 99;
   @media screen and (max-width: ${BREAKPOINTS.md}px) {
     display: none;
   }
@@ -861,7 +862,7 @@ const GreenTxt = styled.span`
 export default function Games() {
   const [selectGame, setSelectGame] = useState<any>();
   const [gameList, setGameList] = useState([]);
-  const [recommendList, setRecommendList] = useState(gamesArr[0]);
+  const [recommendList, setRecommendList] = useState([]);
   const history = useHistory()
   const [order, setOrder] = useState<any>('twitterDesc');
   const [orderStatus, setOrderStatus] = useState<any>('desc');
@@ -879,12 +880,12 @@ export default function Games() {
     history.push(`/games/${item.gameId}`)
   }
   const queryList = async (order) => {
-    let data: any = await queryGameList('', false, 1, 999, order)
+    let data: any = await queryGameList('',  1, 999, order)
     setGameList(data.list)
     setSelectGame(data.list[0])
   }
   const queryRecommond = async () => {
-    let data: any = await queryGameList('', true, 1, 5)
+    let data: any = await queryGameRecommend( true, 1, 4)
     setRecommendList(data.list)
   }
   const handleRequestSort = (event, property) => {
@@ -983,7 +984,7 @@ export default function Games() {
           className="mySwiper2"
         >
           {
-            gameList.length>0 ? gameList.slice(1, 6).map(item =>
+            recommendList.length>0 ? recommendList.map(item =>
               <SwiperSlide key={item.gameId}>
                 <GameInfoBoxSwiper>
                   <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
@@ -1002,7 +1003,7 @@ export default function Games() {
                 </GameInfoBoxSwiper>
               </SwiperSlide>
             ):
-            gamesArr.slice(1,6).map(item =>(
+            gamesArr.map(item =>(
               <SwiperSlide key={item.id}>
                 <GameInfoBoxSwiper>
                   <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
@@ -1034,7 +1035,7 @@ export default function Games() {
             className="mySwiper"
           >
             {
-              gameList.slice(1, 6).map(item =>
+              recommendList.map(item =>
                 <StyledSwiperSlide key={item.banner}>
                   <GamesRightBoxItem onClick={() => { setSelectGame(item) }}>
                     <EnlargementBgBox style={{ backgroundImage: `url(${item.banner})` }} />
