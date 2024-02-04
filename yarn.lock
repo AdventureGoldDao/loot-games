@@ -1735,7 +1735,6 @@
 
 "@binance-chain/bsc-connector@^1.0.0":
   version "1.0.0"
-  resolved "https://registry.npm.taobao.org/@binance-chain/bsc-connector/download/@binance-chain/bsc-connector-1.0.0.tgz#5ce6b02af0921c5fb52c10861b7a0b4a958ca57a"
   integrity sha1-XOawKvCSHF+1LBCGG3oLSpWMpXo=
   dependencies:
     "@web3-react/abstract-connector" "^6.0.7"
@@ -6744,7 +6743,6 @@ classlist-polyfill@^1.0.3:
 
 classnames@^2.2.5:
   version "2.2.6"
-  resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
 classnames@^2.2.6:
   version "2.3.1"
@@ -8063,7 +8061,6 @@ enhanced-resolve@^4.3.0:
 
 enquire.js@^2.1.6:
   version "2.1.6"
-  resolved "https://registry.npm.taobao.org/enquire.js/download/enquire.js-2.1.6.tgz#3e8780c9b8b835084c3f60e166dbc3c2a3c89814"
 
 enquirer@^2.3.5:
   version "2.3.6"
@@ -11905,7 +11902,6 @@ json-stringify-safe@~5.0.1:
 
 json2mq@^0.2.0:
   version "0.2.0"
-  resolved "https://registry.npm.taobao.org/json2mq/download/json2mq-0.2.0.tgz#b637bd3ba9eabe122c83e9720483aeb10d2c904a"
   dependencies:
     string-convert "^0.2.0"
 
@@ -12312,7 +12308,6 @@ lodash.clonedeep@^4.5.0:
 
 lodash.debounce@^4.0.6, lodash.debounce@^4.0.8:
   version "4.0.8"
-  resolved "https://registry.npm.taobao.org/lodash.debounce/download/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
 lodash.flatmap@^4.5.0:
   version "4.5.0"
@@ -15840,7 +15835,6 @@ requires-port@^1.0.0:
 
 resize-observer-polyfill@^1.5.0:
   version "1.5.1"
-  resolved "https://registry.npm.taobao.org/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
@@ -16875,7 +16869,6 @@ strict-uri-encode@^2.0.0:
 
 string-convert@^0.2.0:
   version "0.2.1"
-  resolved "https://registry.npm.taobao.org/string-convert/download/string-convert-0.2.1.tgz#6982cc3049fbb4cd85f8b24568b9d9bf39eeff97"
 
 string-length@^4.0.1:
   version "4.0.2"
@@ -17714,7 +17707,6 @@ tsconfig-paths@^3.9.0:
 
 tslib@2.0.1:
   version "2.0.1"
-  resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.0.1.tgz?cache=0&sync_timestamp=1602287078861&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftslib%2Fdownload%2Ftslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
 
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.11.1"
