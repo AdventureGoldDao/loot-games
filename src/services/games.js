@@ -46,7 +46,7 @@ export const getMedium = () => {
     let gamesArr = itemArr.filter(item => {
       //  return item.include(/<category><![CDATA[ loot-nft ]]></category>/)
       let str = item.toString()
-      return str.includes('<category><![CDATA[news]]></category>')
+      return str.includes('<category><![CDATA[news]]></category>')|| str.includes('<pubDate>Fri, 08 Dec 2023 00:45:49 GMT</pubDate>')
     })
     gamesArr.forEach(cell => {
       const obj = {};

@@ -993,7 +993,7 @@ export default function Games() {
                       <ShadeBoxTitle>{item.name}</ShadeBoxTitle>
                       <div className='df_align_center mb20'>
                         {
-                          item.tags.map(tag => <Tag status=''>{tag}</Tag>)
+                          item.tags && item.tags.map(tag => <Tag status=''>{tag}</Tag>)
                         }
                       </div>
                       <ShadeBoxDes className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</ShadeBoxDes>
@@ -1012,7 +1012,7 @@ export default function Games() {
                       <ShadeBoxTitle>{item.name}</ShadeBoxTitle>
                       <div className='df_align_center mb20'>
                         {
-                          item.tags.map(tag => <Tag status=''>{tag}</Tag>)
+                          item.tags?.map(tag => <Tag status=''>{tag}</Tag>)
                         }
                       </div>
                       <ShadeBoxDes className='text_hidden_3' style={{ color: '#EBEBEB', fontWeight: 400, marginBottom: 30, lineHeight: 1.5 }}>{item.description}</ShadeBoxDes>
