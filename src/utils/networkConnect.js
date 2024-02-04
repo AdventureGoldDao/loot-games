@@ -40,6 +40,7 @@ export const chainTypeImgObj = {
   Ethereum: eth,
   mainnet: eth,
   basegoerli: base,
+  Base: base,
   ropsten: eth,
   rinkeby: eth,
   goerli: eth,
